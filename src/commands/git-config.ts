@@ -4,7 +4,7 @@ import { IGitConfigOptions } from '../utils/Options/Git-Config.options'
 
 module.exports = {
   name: 'git-config',
-  description: 'Configures git',
+  description: 'Configures git credentials',
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, system, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
