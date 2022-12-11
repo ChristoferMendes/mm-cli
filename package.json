@@ -1,10 +1,10 @@
 {
-  "name": "mm-testing-cli",
+  "name": "mm-cli",
   "version": "0.0.1",
   "description": "mm CLI",
   "types": "build/types/types.d.ts",
   "bin": {
-    "mm-test": "bin/mm"
+    "mm": "bin/mm"
   },
   "scripts": {
     "clean-build": "rm -rf ./build",
