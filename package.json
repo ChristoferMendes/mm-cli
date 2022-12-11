@@ -1,16 +1,15 @@
 {
-  "name": "mm",
+  "name": "mm-testing-cli",
   "version": "0.0.1",
   "description": "mm CLI",
-  "private": true,
   "types": "build/types/types.d.ts",
   "bin": {
-    "mm": "bin/mm"
+    "mm-test": "bin/mm"
   },
   "scripts": {
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
-    "copy-templates": "copyfiles ./src/templates/* ./build/templates",
+    "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
     "build": "yarn clean-build && yarn compile && yarn copy-templates",
     "prepublishOnly": "yarn build",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
@@ -29,9 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gluegun": "latest",
-    "styled-components": "5.3.6",
-    "react-native": "1.1.1"
+    "gluegun": "latest"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

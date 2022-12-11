@@ -10,13 +10,13 @@ export async function generateStyledComponent({
   const { name, extension } = props
 
   await template.generate({
-    template: `src/templates/${styledTemplateFiles[0]}`,
+    template: styledTemplateFiles[0],
     target: folderBasedOnIndexOption,
     props: { name, extension },
   })
 
   await template.generate({
-    template: `src/templates/${styledTemplateFiles[1]}`,
+    template: styledTemplateFiles[1],
     target: `${targetFolder}/${name}/styles.${extension}`,
   })
 }

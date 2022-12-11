@@ -53,14 +53,14 @@ module.exports = (toolbox: GluegunToolbox) => {
 
     if (haveNotIndexOption) {
       await template.generate({
-        template: `src/templates/index-template.tsx.ejs`,
+        template: `index-template.tsx.ejs`,
         target: `${folder}/${name}/index.${fileExtension}`,
         props: { name },
       })
     }
 
     await template.generate({
-      template: `src/templates/${templateFile}`,
+      template: templateFile,
       target: folderBasedOnIndexOption,
       props: { name },
     })
