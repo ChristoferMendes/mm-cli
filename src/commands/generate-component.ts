@@ -5,7 +5,7 @@ import { isHelpOption } from '../utils/isHelpOption'
 module.exports = {
   name: 'generate-component',
   description: 'Create a new file in src/components',
-  alias: 'gen:comp',
+  alias: 'gen-comp',
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, createComponent, createHelp, system, print } = toolbox
     const timeElapsedInMs = system.startTimer()
