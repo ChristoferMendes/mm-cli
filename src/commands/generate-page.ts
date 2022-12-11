@@ -18,13 +18,13 @@ module.exports = {
           {
             flag: '--not-index',
             alias: '--not-i',
-            description: 'Generate a file without a index as a main',
+            description: 'Generate a file without a index as a main.',
           },
           {
             flag: '--js',
             alias: null,
             description:
-              'Creates a javascript file (default is a Typescript file)',
+              'Creates a javascript file (default is a Typescript file).',
           },
         ],
         commandName: 'generate:page',
@@ -33,8 +33,8 @@ module.exports = {
     }
 
     if (!parameters.first) {
-      print.error('Name must be specified')
-      print.info(`Done in ${timeElapsedInMs() / 1000} seconds.`)
+      print.error('Name must be specified.')
+      print.info(`Done in ${(timeElapsedInMs() / 1000).toFixed(2)} seconds.`)
       return
     }
 
@@ -42,6 +42,6 @@ module.exports = {
     const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
 
     await createComponent('src/pages', nameToUpperCase)
-    print.info(`Done in ${timeElapsedInMs() / 1000} seconds.`)
+    print.info(`Done in ${(timeElapsedInMs() / 1000).toFixed(2)} seconds.`)
   },
 } as Command
