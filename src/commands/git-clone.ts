@@ -12,13 +12,14 @@ module.exports = {
     const repository = parameters.first
     const stringWithoutBreakingSpaces = (string: string) => string.trim()
     
+    const nameAndRepo = `${stringWithoutBreakingSpaces(userName)}/${stringWithoutBreakingSpaces(repository)}`
 
-    const command = `git clone git@github.com:${stringWithoutBreakingSpaces(userName)}/${stringWithoutBreakingSpaces(repository)}.git`
+    const command = `git clone git@github.com:${nameAndRepo}.git`
 
     try {
-
-      const git = await system.exec(command)
-      console.log(git)
+      await system.exec(command)
+      print.success('Cloned your repository with succes!')
+      print.info(`Repository name: ${print.colors.cyan(repository)}.`)
     } catch (error) {
       const glueGunError = error as GluegunError
       print.info(glueGunError.message)
