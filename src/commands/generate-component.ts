@@ -33,7 +33,12 @@ module.exports = {
 
     if (!parameters.first) {
       print.error('Name must be specified.')
-      print.info(`Done in ${(timeElapsedInMs() / 1000).toFixed(2)} seconds.`)
+      print.newline()
+      print.info(
+        `Done in ${print.colors.cyan(
+          String((timeElapsedInMs() / 1000).toFixed(2))
+        )} seconds.`
+      )
       return
     }
 
@@ -41,6 +46,11 @@ module.exports = {
     const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
 
     await createComponent('src/components', nameToUpperCase)
-    print.info(`Done in ${(timeElapsedInMs() / 1000).toFixed(2)} seconds.`)
+    print.newline()
+    print.info(
+      `Done in ${print.colors.cyan(
+        String((timeElapsedInMs() / 1000).toFixed(2))
+      )} seconds.`
+    )
   },
 } as Command

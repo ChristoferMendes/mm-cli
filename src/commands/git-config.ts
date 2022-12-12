@@ -75,7 +75,9 @@ module.exports = {
     print.info(`User email: ${emailPrint}`)
     print.newline()
     print.info(
-      `Done in ${print.colors.green(String(timeElapsedInMs() / 1000))} seconds.`
+      `Done in ${print.colors.cyan(
+        String((timeElapsedInMs() / 1000).toFixed(2))
+      )} seconds.`
     )
   },
 }
