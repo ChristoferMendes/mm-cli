@@ -1,10 +1,14 @@
+import { PrismaClient } from '@prisma/client'
 import { GluegunToolbox } from 'gluegun'
 import { isHelpOption } from '../utils/isHelpOption'
 import { IGitConfigOptions } from '../utils/Options/Git-Config.options'
 
+const prisma = new PrismaClient()
+
 module.exports = {
   name: 'git-config',
   description: 'Configures git credentials',
+  alias: 'g-conf',
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, system, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
@@ -27,8 +31,15 @@ module.exports = {
           },
         ],
         commandName: 'git-config',
+        alias: 'g-conf',
+        description: 'Configures your git credentials',
       })
-      print.info(`Done in ${timeElapsedInMs() / 1000} seconds.`)
+      print.newline()
+      print.info(
+        `Done in ${print.colors.cyan(
+          String((timeElapsedInMs() / 1000).toFixed(2))
+        )} seconds.`
+      )
       return
     }
 
@@ -39,30 +50,21 @@ module.exports = {
       (item) => !item.match('@')
     )
 
+    const user = await prisma.user.findFirst()
+
     const verifyIfNameIsString = typeof name === 'string'
     const verifyIfEmailIsString = typeof email === 'string'
 
-    const nameUsed = verifyIfNameIsString ? name : nameWithoutOptions[0]
-    const emailUsed = verifyIfEmailIsString ? email : emailWithoutOptions[0]
+    const nameThatComeFromCli = verifyIfNameIsString
+      ? name
+      : nameWithoutOptions[0]
 
-    const verifyParameters = !nameUsed || !emailUsed
+    const emailThatComeFromCli = verifyIfEmailIsString
+      ? email
+      : emailWithoutOptions[0]
 
-    if (verifyParameters) {
-      const nameIsUndefined = name === undefined || verifyIfNameIsString
-      const emailIsUndefined = email === undefined || verifyIfEmailIsString
-
-      nameIsUndefined &&
-        print.error(
-          'Name must be specified (with --name or just a non-email string)'
-        )
-
-      emailIsUndefined &&
-        print.error(
-          'Email must be specified (with --email or just a email string)'
-        )
-
-      return
-    }
+    const nameUsed = nameThatComeFromCli ?? user.name
+    const emailUsed = emailThatComeFromCli ?? user.email
 
     system.exec(`git config user.name ${nameUsed}`)
     system.exec(`git config user.email ${emailUsed}`)

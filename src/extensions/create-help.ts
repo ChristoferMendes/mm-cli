@@ -31,13 +31,15 @@ module.exports = (toolbox: GluegunToolbox) => {
     if (alias) print.info(`Alias: ${alias}`)
 
     if (options != undefined) {
+      print.newline()
+      print.info('Flags')
       const optionsSerialized = options.map((item) => [
         item.flag,
         item.alias,
         item.description,
       ])
 
-      print.table([['Flag', 'Alias', 'Descriptions'], ...optionsSerialized], {
+      print.table([['Flag', 'Alias', 'Description'], ...optionsSerialized], {
         format: 'lean',
       })
     }
