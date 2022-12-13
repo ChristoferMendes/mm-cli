@@ -1,8 +1,11 @@
+import { PrismaClient } from '@prisma/client'
 import { GluegunToolbox } from 'gluegun'
 import { generateStyledComponent } from '../utils/generateStyledComponent'
 import { haveStyledComponent } from '../utils/haveStyledComponent'
 import isReactNative from '../utils/isReactNative'
 import { IGenerateFileOptions } from '../utils/Options'
+
+const prisma = new PrismaClient()
 
 module.exports = (toolbox: GluegunToolbox) => {
   const {
@@ -26,7 +29,8 @@ module.exports = (toolbox: GluegunToolbox) => {
 
     const isStyledComponent = await haveStyledComponent({ filesystem })
 
-    const haveNotIndexOption = notIndex || notI
+    const defaultUserConfigs = await prisma.defaultConfig.findFirst()
+    const haveNotIndexOption = notIndex || notI || defaultUserConfigs.index
 
     const folderBasedOnIndexOption = haveNotIndexOption
       ? `${folder}/${name}/${name}.${fileExtension}`

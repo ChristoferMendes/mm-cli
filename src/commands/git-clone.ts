@@ -1,13 +1,26 @@
+import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
-import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
+import { isHelpOption } from '../utils/isHelpOption'
 
 module.exports = {
   name: 'git-clone',
   description: 'Clone a repository from your git',
-  run: async (toolbox: Toolbox) => {
-    const { system, parameters, print } = toolbox
+  run: async (toolbox: GluegunToolbox) => {
+    const { system, parameters, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
+
+    const haveHelp = isHelpOption(parameters.options)
+    const isOptionsEmpty = Object.keys(parameters.options).length === 0
+
+    if (haveHelp || isOptionsEmpty) {
+      createHelp({
+        commandName: 'git-clone',
+        description: 'Pass the repository name you want to clone',
+        example: 'mm git-clone -my-awesome-repo',
+      })
+      return
+    }
 
     const userName = await system.run('git config user.name')
     const repository = parameters.first
