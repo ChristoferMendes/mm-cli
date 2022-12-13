@@ -7,7 +7,7 @@ module.exports = {
   description: 'Create a new file in src/screens',
   alias: 'gen-screen',
   run: async (toolbox: GluegunToolbox) => {
-    const { parameters, createComponent, createHelp, system, print } = toolbox
+    const { parameters, createFile, createHelp, system, print } = toolbox
     const timeElapsedInMs = system.startTimer()
 
     const haveHelp = isHelpOption(parameters.options)
@@ -19,6 +19,11 @@ module.exports = {
             flag: '--not-index',
             alias: '--not-i',
             description: 'Generate a file without a index as a main.',
+          },
+          {
+            flag: '--index',
+            alias: null,
+            description: 'Generate a file with a index as a main (default)',
           },
           {
             flag: '--js',
@@ -46,7 +51,7 @@ module.exports = {
     const name = parameters.first
     const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
 
-    await createComponent('src/screens', nameToUpperCase)
+    await createFile('src/screens', nameToUpperCase)
     print.newline()
     print.info(
       `Done in ${print.colors.cyan(

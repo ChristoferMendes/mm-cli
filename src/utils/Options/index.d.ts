@@ -3,5 +3,6 @@ export interface IGenerateFileOptions {
   notI: boolean | string
   js: boolean
   help: boolean
+  index: boolean
   h: boolean
 }

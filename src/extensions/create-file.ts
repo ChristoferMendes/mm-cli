@@ -15,12 +15,13 @@ module.exports = (toolbox: GluegunToolbox) => {
     parameters,
   } = toolbox
 
-  async function createComponent(folder: string, name: string | undefined) {
+  async function createFile(folder: string, name: string | undefined) {
     if (!name) {
       error('Name must be specified')
       return
     }
-    const { js, notIndex, notI } = parameters.options as IGenerateFileOptions
+    const { js, notIndex, notI, index } =
+      parameters.options as IGenerateFileOptions
     const fileExtension = js ? 'jsx' : 'tsx'
 
     const templateFile = (await isReactNative({ filesystem }))
@@ -32,9 +33,10 @@ module.exports = (toolbox: GluegunToolbox) => {
     const defaultUserConfigs = await prisma.defaultConfig.findFirst()
     const haveNotIndexOption = notIndex || notI || defaultUserConfigs.index
 
-    const folderBasedOnIndexOption = haveNotIndexOption
-      ? `${folder}/${name}/${name}.${fileExtension}`
-      : `${folder}/${name}/index.${fileExtension}`
+    const folderBasedOnIndexOption =
+      haveNotIndexOption && !index
+        ? `${folder}/${name}/${name}.${fileExtension}`
+        : `${folder}/${name}/index.${fileExtension}`
 
     if (isStyledComponent) {
       const styledTemplateFiles = (await isReactNative({ filesystem }))
@@ -74,5 +76,5 @@ module.exports = (toolbox: GluegunToolbox) => {
     )
   }
 
-  toolbox.createComponent = createComponent
+  toolbox.createFile = createFile
 }
