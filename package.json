@@ -1,5 +1,5 @@
 {
-  "name": "mm-tec-cli-testing",
+  "name": "mm-tecnologia-cli",
   "version": "0.0.1",
   "description": "mm CLI",
   "types": "build/types/types.d.ts",
@@ -8,12 +8,12 @@
   },
   "scripts": {
     "copy-prisma": "cp -r ./prisma ./build",
-    "copy-generated": "cp -r ./src/generated",
+    "copy-generated": "cp -r ./src/generated ./build",
     "gen-prisma": "npx prisma generate",
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
-    "build": "yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma",
+    "build": "yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma && yarn copy-generated",
     "prepublishOnly": "yarn build",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "test": "jest --verbose --",

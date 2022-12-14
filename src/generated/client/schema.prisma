@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -15,6 +15,6 @@ model User {
 }
 
 model DefaultConfig {
-  id    Int     @id @default(autoincrement())
-  index Boolean
+    id    Int     @id @default(autoincrement())
+    index Boolean
 }

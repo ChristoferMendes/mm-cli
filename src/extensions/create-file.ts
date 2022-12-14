@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import { GluegunToolbox } from 'gluegun'
+import { PrismaClient } from '../generated/client'
 import { generateStyledComponent } from '../utils/generateStyledComponent'
 import { haveStyledComponent } from '../utils/haveStyledComponent'
 import isReactNative from '../utils/isReactNative'
@@ -31,7 +31,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     const isStyledComponent = await haveStyledComponent({ filesystem })
 
     const defaultUserConfigs = await prisma.defaultConfig.findFirst()
-    const haveNotIndexOption = notIndex || notI || defaultUserConfigs.index
+    const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.index
 
     const folderBasedOnIndexOption =
       haveNotIndexOption && !index
