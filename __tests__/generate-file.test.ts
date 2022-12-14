@@ -55,11 +55,15 @@ describe('Generate file tests', () => {
 
   describe('Generate react-native file', () => {
     it('should create a file with react native setup', async () => {
-      const packageJson = await filesystem.read('package.json', 'json')
-      if (!packageJson.dependencies['react-native']) {
-        return console.log('You do not have react-native in your package.json')
-      }
+      await system.exec('mv package.json packageMain.json')
+      await system.exec(
+        'cp ./__tests__/mocks/package.json/mock-rn.json ./package.json'
+      )
+
       const output = await cli('gen-page HomeTest --index')
+
+      await system.exec('rm -rf package.json')
+      await system.exec('mv packageMain.json package.json')
 
       expect(output).toContain(
         'Generated HomeTest file at src/pages/HomeTest/index.tsx!'
@@ -73,16 +77,52 @@ describe('Generate file tests', () => {
 
   describe('Generate styled-component file', () => {
     it('should create a file with styled-component setup', async () => {
-      // const mockedPackageJson = await filesystem.read(
-      //   './mocks/mock.package.json',
-      //   'json'
-      // )
-      // await system.exec('mv package.json packageMain.json')
-      // await system.exec('cp ./__tests__/mocks/mock.package.json ./package.json')
-      // const output = await cli('gen-page HomeTest --index')
-      // expect(output).toContain(
-      //   'Generated HomeTest file at src/pages/HomeTest/index.tsx'
-      // )
+      await system.exec('mv package.json packageMain.json')
+      await system.exec(
+        'cp ./__tests__/mocks/package.json/mock-styled-components.json ./package.json'
+      )
+      const output = await cli('gen-page HomeTest --index')
+
+      await system.exec('rm -rf package.json')
+      await system.exec('mv packageMain.json package.json')
+
+      expect(output).toContain(
+        'Generated HomeTest file at src/pages/HomeTest/index.tsx'
+      )
+
+      const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
+      expect(styleFileCreated).toContain(
+        'export const Container = styled.div``'
+      )
+
+      const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
+      expect(fileCreated).toContain('<Container>')
+    })
+  })
+
+  describe('Generate react-native with styled-component file', () => {
+    it('should create a react-native file with styled-component', async () => {
+      await system.exec('mv package.json packageMain.json')
+      await system.exec(
+        'cp ./__tests__/mocks/package.json/mock-rn-and-styled-components.json ./package.json'
+      )
+
+      const output = await cli('gen-page HomeTest --index')
+      await system.exec('rm -rf package.json')
+      await system.exec('mv packageMain.json package.json')
+
+      expect(output).toContain(
+        'Generated HomeTest file at src/pages/HomeTest/index.tsx'
+      )
+
+      const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
+      expect(styleFileCreated).toContain(
+        'export const Container = styled.View``'
+      )
+
+      const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
+      expect(fileCreated).toContain("import { Text } from 'react-native';")
+      expect(fileCreated).toContain('<Container>')
     })
   })
 })

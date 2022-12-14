@@ -28,8 +28,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@prisma/client": "4.7.1",
-    "gluegun": "latest",
     "react-native": "1"
   },
   "devDependencies": {

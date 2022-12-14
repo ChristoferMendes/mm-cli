@@ -46,7 +46,7 @@ module.exports = (toolbox: GluegunToolbox) => {
       await generateStyledComponent({
         folderBasedOnIndexOption,
         styledTemplateFiles,
-        props: { name, extension: fileExtension },
+        props: { name, extension: fileExtension.slice(0, 2) },
         targetFolder: folder,
         template,
       })

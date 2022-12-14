@@ -1,11 +1,15 @@
+import { PrismaClient } from '.prisma/client'
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
+
+const prisma = new PrismaClient()
 
 module.exports = {
   name: 'update-me',
   description: 'update your credentials',
   run: async (toolbox: Toolbox) => {
     const { system, parameters, print } = toolbox
+    const timeElapsedInMs = system.startTimer()
 
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
@@ -16,7 +20,23 @@ module.exports = {
       return print.error('At least name or email must be specified')
     }
 
-    const a = await system.run(`mm store-me ${name} ${email}`)
-    print.info(a)
+    const user = await prisma.user.findFirst()
+    if (!user) print.error('You do not have any credentials stored yet')
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        email: email ?? user.email,
+        name: name ?? user.name,
+      },
+    })
+
+    print.success('Credentials updated')
+    print.newline()
+    print.info(
+      `Done in ${print.colors.cyan(
+        String((timeElapsedInMs() / 1000).toFixed(2))
+      )} seconds.`
+    )
   },
 } as Command
