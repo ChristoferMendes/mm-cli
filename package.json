@@ -28,7 +28,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "styled-components": "1"
+    "@prisma/client": "4.7.1",
+    "gluegun": "latest"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

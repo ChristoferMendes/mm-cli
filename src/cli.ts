@@ -11,13 +11,11 @@ async function run(argv) {
     .plugins('./node_modules', { matching: 'mm-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
-    .defaultCommand((toolbox: GluegunToolbox) =>
-      toolbox.print.error(
-        `This command does not exists ${toolbox.print.colors.green(
-          'mm -h for available commands'
-        )}`
-      )
-    )
+    .defaultCommand(async (toolbox: GluegunToolbox) => {
+      const { system, print } = toolbox
+      const output = await system.run('mm -h')
+      print.info(output)
+    })
     .create()
   // enable the following method if you'd like to skip loading one of these core extensions
   // this can improve performance if they're not necessary for your project:
