@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import { GluegunToolbox } from 'gluegun'
+import { PrismaClient } from '../generated/client'
 import { isHelpOption } from '../utils/isHelpOption'
 import { IGitConfigOptions } from '../utils/Options/Git-Config.options'
 

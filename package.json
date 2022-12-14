@@ -1,5 +1,5 @@
 {
-  "name": "mm-tec-cli",
+  "name": "mm-tec-cli-testing",
   "version": "0.0.1",
   "description": "mm CLI",
   "types": "build/types/types.d.ts",
@@ -7,7 +7,9 @@
     "mm": "bin/mm"
   },
   "scripts": {
-    "copy-prisma": "cp ./prisma ./build",
+    "copy-prisma": "cp -r ./prisma ./build",
+    "copy-generated": "cp -r ./src/generated",
+    "gen-prisma": "npx prisma generate",
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
