@@ -1,5 +1,5 @@
 {
-  "name": "mm-tecnologia-cli",
+  "name": "mm",
   "version": "0.0.1",
   "description": "mm CLI",
   "types": "build/types/types.d.ts",
