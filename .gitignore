@@ -10,3 +10,4 @@ src/pages
 src/components
 src/screens
 src/generated
+src/prisma/generated
