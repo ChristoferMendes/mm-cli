@@ -36,3 +36,22 @@ $ npm install --global mm-tec-cli
 
 MIT - see LICENSE
 
+
+## Running the project
+
+```shell
+  $ yarn
+  $ yarn gen-prisma
+  $ npm link --global mm 
+```
+
+## Running tests
+
+```shell
+  $ yarn test
+```
+
+## Building the project
+```shell
+  $ yarn build
+```
