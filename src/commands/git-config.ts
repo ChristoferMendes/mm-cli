@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 module.exports = {
   name: 'git-config',
   description: 'Configures git credentials',
-  alias: 'g-conf',
+  alias: 'config',
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, system, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()

@@ -5,6 +5,7 @@ import { isHelpOption } from '../utils/isHelpOption'
 
 module.exports = {
   name: 'git-clone',
+  alias: 'clone',
   description: 'Clone a repository from your git',
   run: async (toolbox: GluegunToolbox) => {
     const { system, parameters, print, createHelp } = toolbox

@@ -15,21 +15,23 @@ $ npm install --global mm-tec-cli
 ```
 
 ## Prefix for all commands: mm
+### Example
+- mm generate-component Home
 
 
 ## Commands
 
-- version (v)                     Output the version number                                          
-- whoami                          Show your credentials stored                                       
-- update-me                       update your credentials                                            
-- store-me                        Store your git credentials (default is your local git credentials) 
-- git-config (g-conf)             Configures git credentials                                         
-- git-clone                       Clone a repository from your git                                   
-- git-check (check)               Print your current git credentials                                 
-- generate-screen (gen-screen)    Create a new file in src/screens                                   
-- generate-page (gen-page)        Create a new file in src/pages                                     
-- generate-component (gen-comp)   Create a new file in src/components                                
-- default-configs (configs)       Store default configs (example: --not-index by default)
+- version (v) ➜ Output the version number                                          
+- whoami ➜ Show your credentials stored                                       
+- update-me ➜ update your credentials                                            
+- store-me ➜ Store your git credentials (default is your local git credentials) 
+- git-config (config) ➜ Configures git credentials                                         
+- git-clone  (clone) ➜ Clone a repository from your git                                   
+- git-check (check) ➜ Print your current git credentials                                 
+- generate-screen (gen-screen) ➜ Create a new file in src/screens                                   
+- generate-page (gen-page) ➜ Create a new file in src/pages                                     
+- generate-component (gen-comp) ➜ Create a new file in src/components                                
+- default-configs (configs) ➜ Store default configs (example: --not-index by default)
 ## License
 
 MIT - see LICENSE
