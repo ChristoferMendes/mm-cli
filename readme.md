@@ -19,9 +19,12 @@ $ npm install --global mm-tec-cli
 - mm generate-component Home
 
 
-## Commands
 
-- version (v) ➜ Output the version number                                          
+
+<details> 
+ <summary>Commands</summary>
+
+ - version (v) ➜ Output the version number                                          
 - whoami ➜ Show your credentials stored                                       
 - update-me ➜ update your credentials                                            
 - store-me ➜ Store your git credentials (default is your local git credentials) 
@@ -32,10 +35,7 @@ $ npm install --global mm-tec-cli
 - generate-page (gen-page) ➜ Create a new file in src/pages                                     
 - generate-component (gen-comp) ➜ Create a new file in src/components                                
 - default-configs (configs) ➜ Store default configs (example: --not-index by default)
-## License
-
-MIT - see LICENSE
-
+</details>
 
 ## Running the project
 
@@ -55,3 +55,7 @@ MIT - see LICENSE
 ```shell
   $ yarn build
 ```
+
+## License
+
+MIT - see LICENSE
