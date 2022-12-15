@@ -1,7 +1,7 @@
 {
-  "name": "mm",
-  "version": "0.0.1",
-  "description": "mm CLI",
+  "name": "mm-tec-cli",
+  "version": "1.0.0",
+  "description": "A Command Line Interface for generate files",
   "types": "build/types/types.d.ts",
   "bin": {
     "mm": "bin/mm"
@@ -13,7 +13,7 @@
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
-    "build": "yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma && yarn copy-generated",
+    "build": "yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma",
     "prepublishOnly": "yarn build",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "test": "jest --verbose --",

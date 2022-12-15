@@ -1,26 +1,36 @@
-# mm CLI
+# MM CLI
 
-A CLI for mm.
+<div align="center"> 
 
-## Customizing your CLI
+  ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+  ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+  ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
+</div>
 
-Check out the documentation at https://github.com/infinitered/gluegun/tree/master/docs.
+## Install
 
-## Publishing to NPM
-
-To package your CLI up for NPM, do this:
 
 ```shell
-$ npm login
-$ npm whoami
-$ npm test
-
-$ npm run build
-
-$ npm publish
+$ npm install --global mm-tec-cli
 ```
 
-# License
+## Prefix for all commands: mm
+
+
+## Commands
+
+- version (v)                     Output the version number                                          
+- whoami                          Show your credentials stored                                       
+- update-me                       update your credentials                                            
+- store-me                        Store your git credentials (default is your local git credentials) 
+- git-config (g-conf)             Configures git credentials                                         
+- git-clone                       Clone a repository from your git                                   
+- git-check (check)               Print your current git credentials                                 
+- generate-screen (gen-screen)    Create a new file in src/screens                                   
+- generate-page (gen-page)        Create a new file in src/pages                                     
+- generate-component (gen-comp)   Create a new file in src/components                                
+- default-configs (configs)       Store default configs (example: --not-index by default)
+## License
 
 MIT - see LICENSE
 

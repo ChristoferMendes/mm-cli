@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 module.exports = {
   name: 'whoami',
   description: 'Show your credentials stored',
+  alias: 'i',
   run: async (toolbox: Toolbox) => {
     const { print, system } = toolbox
     const timeElapsedInMs = system.startTimer()
