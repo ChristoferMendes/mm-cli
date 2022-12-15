@@ -32,9 +32,11 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "4.7.1",
+    "figlet": "^1.5.2",
     "gluegun": "latest"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.5",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.7.11",
     "@typescript-eslint/eslint-plugin": "^4.17.0",

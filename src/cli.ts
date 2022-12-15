@@ -1,4 +1,5 @@
 import { build, GluegunToolbox } from 'gluegun'
+import * as figlet from 'figlet'
 
 /**
  * Create the cli and kick it off
@@ -11,10 +12,33 @@ async function run(argv) {
     .plugins('./node_modules', { matching: 'mm-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
-    .defaultCommand(async (toolbox: GluegunToolbox) => {
-      const { system, print } = toolbox
-      const output = await system.run('mm -h')
-      print.info(output)
+    .defaultCommand((toolbox: GluegunToolbox) => {
+      const { print } = toolbox
+      const onError = (err: Error, data: string) => {
+        if (err) {
+          console.log('Something went wrong...')
+          console.dir(err)
+          return
+        }
+        console.log(data)
+      }
+
+      print.success(
+        `Please, type ${print.colors.cyan(
+          'mm -h'
+        )} to see the commands available!`
+      )
+      figlet.text(
+        'MM CLI!',
+        {
+          font: '3D-ASCII',
+          horizontalLayout: 'default',
+          verticalLayout: 'default',
+          width: 200,
+          whitespaceBreak: true,
+        },
+        onError
+      )
     })
     .create()
   // enable the following method if you'd like to skip loading one of these core extensions
