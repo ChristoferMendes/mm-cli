@@ -1,5 +1,0 @@
--- CreateTable
-CREATE TABLE "DefaultConfig" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "index" BOOLEAN NOT NULL
-);

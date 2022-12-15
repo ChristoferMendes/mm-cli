@@ -1,6 +1,6 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
-import { PrismaClient } from '../generated/client'
+import { PrismaClient } from '../prisma/generated/client'
 
 const prisma = new PrismaClient()
 
