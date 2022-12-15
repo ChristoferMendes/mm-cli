@@ -1,9 +1,18 @@
 import { IHaveStyledComponent } from './haveStyledComponent'
 
+interface IPackageJson {
+  dependencies: {
+    [key: string]: string
+  }
+}
+
 export async function haveStyledComponent({
   filesystem,
 }: IHaveStyledComponent): Promise<boolean> {
-  const packageJson = await filesystem.read('package.json', 'json')
+  const packageJson: undefined | IPackageJson = await filesystem.read(
+    'package.json',
+    'json'
+  )
 
-  return !!packageJson.dependencies['styled-components']
+  if (packageJson) return !!packageJson.dependencies['styled-components']
 }

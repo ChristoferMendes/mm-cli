@@ -42,7 +42,7 @@ $ npm install --global mm-tec-cli
 ```shell
   $ yarn
   $ yarn gen-prisma
-  $ npm link --global mm 
+  $ npm link
 ```
 
 ## Running tests
