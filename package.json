@@ -7,8 +7,7 @@
     "mm": "bin/mm"
   },
   "scripts": {
-    "copy-prisma": "cp -r ./prisma ./build",
-    "copy-generated": "cp -r ./src/generated ./build",
+    "copy-prisma": "cp -r ./src/prisma ./build",
     "gen-prisma": "npx prisma generate",
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
