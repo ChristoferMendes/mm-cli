@@ -28,19 +28,15 @@ module.exports = {
 
     const isOptionsEmpty = Object.keys(parameters.options).length === 0
 
-    if (isOptionsEmpty) {
+    const haveHelp = isHelpOption(parameters.options)
+
+    if (haveHelp || isOptionsEmpty) {
       return helper()
     }
 
     const { notI, notIndex } = parameters.options as IGenerateFileOptions
     if (typeof notI === 'boolean' || typeof notIndex === 'boolean') {
       return print.error('oh no')
-    }
-
-    const haveHelp = isHelpOption(parameters.options)
-
-    if (haveHelp) {
-      return helper()
     }
 
     const config = await prisma.defaultConfig.findFirst()
