@@ -11,7 +11,7 @@ module.exports = {
   alias: 'configs',
   description: 'Store default configs (example: --not-index by default)',
   run: async (toolbox: Toolbox) => {
-    const { parameters, print, createHelp } = toolbox
+    const { parameters, print, createHelp, prompt } = toolbox
     const helper = () => {
       return createHelp({
         options: [
@@ -28,9 +28,39 @@ module.exports = {
 
     const isOptionsEmpty = Object.keys(parameters.options).length === 0
 
+    if (isOptionsEmpty) {
+      const confirmation = await prompt.confirm(
+        'Do you want --not-index to be your default when generating a file?'
+      )
+
+      const config = await prisma.defaultConfig.findFirst()
+
+      if (config) {
+        await prisma.defaultConfig.update({
+          where: { id: config.id },
+          data: {
+            index: confirmation,
+          },
+        })
+        return print.success(
+          `Default config updated! not-index config: ${confirmation}.`
+        )
+      }
+
+      await prisma.defaultConfig.create({
+        data: {
+          index: confirmation,
+        },
+      })
+
+      return print.success(
+        `Default config saved! not-index config: ${confirmation}.`
+      )
+    }
+
     const haveHelp = isHelpOption(parameters.options)
 
-    if (haveHelp || isOptionsEmpty) {
+    if (haveHelp) {
       return helper()
     }
 

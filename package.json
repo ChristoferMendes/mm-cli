@@ -22,7 +22,8 @@
     "mm": "./bin/mm",
     "prisma-gen": "npx prisma generate --schema=./src/prisma/schema.prisma",
     "prisma-studio": "npx prisma studio --schema=./src/prisma/schema.prisma",
-    "prisma-reset": "npx prisma migrate reset --schema=./src/prisma/schema.prisma"
+    "prisma-reset": "npx prisma migrate reset --schema=./src/prisma/schema.prisma",
+    "prisma-migrate": "npx prisma migrate dev --name init --schema=./src/prisma/schema.prisma"
   },
   "files": [
     "build",
