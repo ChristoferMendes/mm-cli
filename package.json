@@ -20,7 +20,8 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
     "mm": "./bin/mm",
-    "prisma-gen": "npx prisma generate --schema=./src/prisma/schema.prisma"
+    "prisma-gen": "npx prisma generate --schema=./src/prisma/schema.prisma",
+    "prisma-studio": "npx prisma studio --schema=./src/prisma/schema.prisma"
   },
   "files": [
     "build",
