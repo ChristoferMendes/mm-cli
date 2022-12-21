@@ -11,3 +11,5 @@ src/components
 src/screens
 src/generated
 src/prisma/generated
+src/prisma/dev.db
+src/prisma/dev.db-journal
