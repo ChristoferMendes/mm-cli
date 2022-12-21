@@ -1,7 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
+import { PrismaClient } from '../prisma/generated/client'
 import { isHelpOption } from '../utils/isHelpOption'
+
+const prisma = new PrismaClient()
 
 module.exports = {
   name: 'git-clone',
@@ -12,19 +15,18 @@ module.exports = {
     const timeElapsedInMs = system.startTimer()
 
     const haveHelp = isHelpOption(parameters.options)
-    const isOptionsEmpty = Object.keys(parameters.options).length === 0
+    const repository = parameters.first
 
-    if (haveHelp || isOptionsEmpty) {
+    if (haveHelp || !repository) {
       createHelp({
         commandName: 'git-clone',
         description: 'Pass the repository name you want to clone',
-        example: 'mm git-clone -my-awesome-repo',
+        example: 'mm git-clone my-awesome-repo',
       })
       return
     }
 
     const userName = await system.run('git config user.name')
-    const repository = parameters.first
     const stringWithoutBreakingSpaces = (string: string) => string.trim()
 
     const nameAndRepo = `${stringWithoutBreakingSpaces(
@@ -43,6 +45,22 @@ module.exports = {
           String((timeElapsedInMs() / 1000).toFixed(2))
         )} seconds.`
       )
+      const lastRepo = await prisma.lastRepoCloned.findFirst()
+
+      if (!lastRepo) {
+        return await prisma.lastRepoCloned.create({
+          data: {
+            name: repository,
+          },
+        })
+      }
+
+      await prisma.lastRepoCloned.update({
+        where: { id: lastRepo.id },
+        data: {
+          name: repository,
+        },
+      })
     } catch (error) {
       const glueGunError = error as GluegunError
       print.info(glueGunError.message)

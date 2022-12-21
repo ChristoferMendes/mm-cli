@@ -11,5 +11,11 @@ CREATE TABLE "DefaultConfig" (
     "index" BOOLEAN NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "lastRepoCloned" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
