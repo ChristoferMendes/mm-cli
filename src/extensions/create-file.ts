@@ -1,6 +1,7 @@
 import { GluegunToolbox } from 'gluegun'
 import { PrismaClient } from '../prisma/generated/client'
 import { generateStyledComponent } from '../utils/generateStyledComponent'
+import { haveNativeBase } from '../utils/haveNativeBase'
 import { haveStyledComponent } from '../utils/haveStyledComponent'
 import isReactNative from '../utils/isReactNative'
 import { IGenerateFileOptions } from '../utils/Options'
@@ -29,6 +30,8 @@ module.exports = (toolbox: GluegunToolbox) => {
       : 'component.tsx.ejs'
 
     const isStyledComponent = await haveStyledComponent({ filesystem })
+    const isNativeBase = await haveNativeBase({ filesystem })
+    const nativeImport = isNativeBase ? 'native-base' : 'react-native'
 
     const defaultUserConfigs = await prisma.defaultConfig.findFirst()
     const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.index
@@ -68,7 +71,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     await template.generate({
       template: templateFile,
       target: folderBasedOnIndexOption,
-      props: { name },
+      props: { name, native: nativeImport },
     })
 
     success(
