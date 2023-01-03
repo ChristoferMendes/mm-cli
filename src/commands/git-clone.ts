@@ -28,7 +28,7 @@ module.exports = {
 
     const user = await prisma.user.findFirst()
 
-    const userName = user.name ?? (await system.run('git config user.name'))
+    const userName = user?.name ?? (await system.run('git config user.name'))
 
     const nameAndRepo = `${userName.trim()}/${repository.trim()}`
 
