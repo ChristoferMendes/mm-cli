@@ -26,12 +26,11 @@ module.exports = {
       return
     }
 
-    const userName = await system.run('git config user.name')
-    const stringWithoutBreakingSpaces = (string: string) => string.trim()
+    const user = await prisma.user.findFirst()
 
-    const nameAndRepo = `${stringWithoutBreakingSpaces(
-      userName
-    )}/${stringWithoutBreakingSpaces(repository)}`
+    const userName = user.name ?? (await system.run('git config user.name'))
+
+    const nameAndRepo = `${userName.trim()}/${repository.trim()}`
 
     const command = `git clone git@github.com:${nameAndRepo}.git`
 
