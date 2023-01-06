@@ -1,10 +1,8 @@
 import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
-import { PrismaClient } from '../prisma/generated/client'
+import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
-
-const prisma = new PrismaClient()
 
 module.exports = {
   name: 'git-clone',

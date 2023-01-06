@@ -1,9 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
-import { PrismaClient } from '../prisma/generated/client'
+import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
-
-const prisma = new PrismaClient()
 
 module.exports = {
   name: 'store-me',

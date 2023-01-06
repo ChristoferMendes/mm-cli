@@ -40,6 +40,7 @@ async function run(argv) {
         onError
       )
     })
+    .exclude(['http', 'patching', 'package-manager', 'semver'])
     .create()
   // enable the following method if you'd like to skip loading one of these core extensions
   // this can improve performance if they're not necessary for your project:

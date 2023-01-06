@@ -22,17 +22,10 @@ module.exports = (toolbox: GluegunToolbox) => {
     const { js, notIndex, notI, index } =
       parameters.options as IGenerateFileOptions
 
-    const fileExtension = js ? 'jsx' : 'tsx'
-
-    const templateFile = (await isReactNative({ filesystem }))
-      ? 'component-rn.tsx.ejs'
-      : 'component.tsx.ejs'
-
-    const isNativeBase = await haveNativeBase({ filesystem })
-    const nativeImport = isNativeBase ? 'native-base' : 'react-native'
-
     const defaultUserConfigs = await prisma.defaultConfig.findFirst()
     const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.index
+
+    const fileExtension = js ? 'jsx' : 'tsx'
 
     const folderBasedOnIndexOption =
       haveNotIndexOption && !index
@@ -87,6 +80,13 @@ module.exports = (toolbox: GluegunToolbox) => {
         props: { name },
       })
     }
+
+    const templateFile = (await isReactNative({ filesystem }))
+      ? 'component-rn.tsx.ejs'
+      : 'component.tsx.ejs'
+
+    const isNativeBase = await haveNativeBase({ filesystem })
+    const nativeImport = isNativeBase ? 'native-base' : 'react-native'
 
     await template.generate({
       template: templateFile,

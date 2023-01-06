@@ -1,9 +1,7 @@
 import { GluegunToolbox } from 'gluegun'
-import { PrismaClient } from '../prisma/generated/client'
+import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
 import { IGitConfigOptions } from '../shared/Options/Git-Config.options'
-
-const prisma = new PrismaClient()
 
 module.exports = {
   name: 'git-config',
@@ -43,10 +41,10 @@ module.exports = {
       return
     }
 
-    const emailWithoutOptions = parameters.array.filter((item) =>
+    const [emailWithoutOptions] = parameters.array.filter((item) =>
       item.match('@')
     )
-    const nameWithoutOptions = parameters.array.filter(
+    const [nameWithoutOptions] = parameters.array.filter(
       (item) => !item.match('@')
     )
 
@@ -55,13 +53,11 @@ module.exports = {
     const verifyIfNameIsString = typeof name === 'string'
     const verifyIfEmailIsString = typeof email === 'string'
 
-    const nameThatComeFromCli = verifyIfNameIsString
-      ? name
-      : nameWithoutOptions[0]
+    const nameThatComeFromCli = verifyIfNameIsString ? name : nameWithoutOptions
 
     const emailThatComeFromCli = verifyIfEmailIsString
       ? email
-      : emailWithoutOptions[0]
+      : emailWithoutOptions
 
     const nameUsed = nameThatComeFromCli ?? user.name
     const emailUsed = emailThatComeFromCli ?? user.email

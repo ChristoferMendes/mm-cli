@@ -1,8 +1,6 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
-import { PrismaClient } from '../prisma/generated/client'
-
-const prisma = new PrismaClient()
+import { prisma } from '../prisma'
 
 module.exports = {
   name: 'update-me',
