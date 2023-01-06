@@ -1,12 +1,10 @@
 import { GluegunToolbox } from 'gluegun'
-import { PrismaClient } from '../prisma/generated/client'
-import { generateStyledComponent } from '../utils/generateStyledComponent'
-import { haveNativeBase } from '../utils/haveNativeBase'
-import { haveStyledComponent } from '../utils/haveStyledComponent'
-import isReactNative from '../utils/isReactNative'
-import { IGenerateFileOptions } from '../utils/Options'
-
-const prisma = new PrismaClient()
+import { prisma } from '../prisma'
+import { generateStyledComponent } from '../shared/generateStyledComponent'
+import { haveNativeBase } from '../shared/haveNativeBase'
+import { haveStyledComponent } from '../shared/haveStyledComponent'
+import isReactNative from '../shared/isReactNative'
+import { IGenerateFileOptions } from '../shared/Options'
 
 module.exports = (toolbox: GluegunToolbox) => {
   const {
@@ -23,13 +21,13 @@ module.exports = (toolbox: GluegunToolbox) => {
     }
     const { js, notIndex, notI, index } =
       parameters.options as IGenerateFileOptions
+
     const fileExtension = js ? 'jsx' : 'tsx'
 
     const templateFile = (await isReactNative({ filesystem }))
       ? 'component-rn.tsx.ejs'
       : 'component.tsx.ejs'
 
-    const isStyledComponent = await haveStyledComponent({ filesystem })
     const isNativeBase = await haveNativeBase({ filesystem })
     const nativeImport = isNativeBase ? 'native-base' : 'react-native'
 
@@ -41,15 +39,37 @@ module.exports = (toolbox: GluegunToolbox) => {
         ? `${folder}/${name}/${name}.${fileExtension}`
         : `${folder}/${name}/index.${fileExtension}`
 
+    const isStyledComponent = await haveStyledComponent({ filesystem })
+
     if (isStyledComponent) {
+      const reactNativeStyledComponentsTemplates = [
+        'react-rn-styled.tsx.ejs',
+        'styled-rn.tsx.ejs',
+      ]
+
+      const reactStyledComponentsTemplates = [
+        'react-styled.tsx.ejs',
+        'styled.tsx.ejs',
+      ]
+
       const styledTemplateFiles = (await isReactNative({ filesystem }))
-        ? ['react-rn-styled.tsx.ejs', 'styled-rn.tsx.ejs']
-        : ['react-styled.tsx.ejs', 'styled.tsx.ejs']
+        ? reactNativeStyledComponentsTemplates
+        : reactStyledComponentsTemplates
+
+      const extensionWithoutX = fileExtension.replace('x', '')
+
+      if (haveNotIndexOption) {
+        await template.generate({
+          template: `index-template.tsx.ejs`,
+          target: `${folder}/${name}/index.${fileExtension}`,
+          props: { name },
+        })
+      }
 
       await generateStyledComponent({
         folderBasedOnIndexOption,
         styledTemplateFiles,
-        props: { name, extension: fileExtension.slice(0, 2) },
+        props: { name, styledComponentExtension: extensionWithoutX },
         targetFolder: folder,
         template,
       })

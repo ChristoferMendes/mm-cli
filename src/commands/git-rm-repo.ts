@@ -1,13 +1,14 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { PrismaClient } from '../prisma/generated/client'
-import { isHelpOption } from '../utils/isHelpOption'
+import { isHelpOption } from '../shared/isHelpOption'
 
 const prisma = new PrismaClient()
 
 module.exports = {
   name: 'git-rm-repo',
   alias: 'rm-repo',
+  description: 'Delete the last repository cloned',
   run: async (toolbox: Toolbox) => {
     const { print, system, parameters, createHelp } = toolbox
 

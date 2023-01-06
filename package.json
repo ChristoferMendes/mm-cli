@@ -37,7 +37,10 @@
   "dependencies": {
     "@prisma/client": "4.7.1",
     "figlet": "^1.5.2",
-    "gluegun": "latest"
+    "gluegun": "latest",
+    "native-base": "^3.4.25",
+    "react-native": "^0.70.6",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.5",

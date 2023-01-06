@@ -2,7 +2,7 @@ import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { PrismaClient } from '../prisma/generated/client'
-import { isHelpOption } from '../utils/isHelpOption'
+import { isHelpOption } from '../shared/isHelpOption'
 
 const prisma = new PrismaClient()
 
@@ -21,7 +21,7 @@ module.exports = {
       createHelp({
         commandName: 'git-clone',
         description: 'Pass the repository name you want to clone',
-        example: 'mm git-clone my-awesome-repo',
+        example: '$ mm git-clone my-awesome-repo',
       })
       return
     }

@@ -1,7 +1,7 @@
 import { GluegunToolbox } from 'gluegun'
 import { PrismaClient } from '../prisma/generated/client'
-import { isHelpOption } from '../utils/isHelpOption'
-import { IGitConfigOptions } from '../utils/Options/Git-Config.options'
+import { isHelpOption } from '../shared/isHelpOption'
+import { IGitConfigOptions } from '../shared/Options/Git-Config.options'
 
 const prisma = new PrismaClient()
 

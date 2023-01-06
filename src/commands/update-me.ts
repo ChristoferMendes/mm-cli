@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 module.exports = {
   name: 'update-me',
-  description: 'update your credentials',
+  description: 'Update your credentials',
   run: async (toolbox: Toolbox) => {
     const { system, parameters, print } = toolbox
     const timeElapsedInMs = system.startTimer()

@@ -1,6 +1,6 @@
 import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
-import { isHelpOption } from '../utils/isHelpOption'
+import { isHelpOption } from '../shared/isHelpOption'
 
 module.exports = {
   name: 'generate-screen',

@@ -5,7 +5,7 @@ export interface IGenerateStyledComponent {
   folderBasedOnIndexOption: string
   props: {
     name: string
-    extension: string
+    styledComponentExtension: string
   }
   template: GluegunTemplate
   targetFolder: string

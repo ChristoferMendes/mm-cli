@@ -1,6 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { PrismaClient } from '../prisma/generated/client'
+import { isHelpOption } from '../shared/isHelpOption'
 
 const prisma = new PrismaClient()
 
@@ -9,8 +10,20 @@ module.exports = {
   description:
     'Store your git credentials (default is your local git credentials)',
   run: async (toolbox: Toolbox) => {
-    const { parameters, print, system } = toolbox
+    const { parameters, print, system, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
+
+    const haveHelp = isHelpOption(parameters.options)
+
+    if (haveHelp) {
+      createHelp({
+        commandName: 'store-me',
+        description: 'store your credentials to be used in many other commands',
+        example: '$ mm store-me john johndoe@gmail.com',
+      })
+      return
+    }
+
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
     const name = parameters.array.filter((item) => !item.match(emailRegex))[0]

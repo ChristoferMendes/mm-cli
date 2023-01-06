@@ -1,15 +1,15 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { PrismaClient } from '../prisma/generated/client'
-import { isHelpOption } from '../utils/isHelpOption'
-import { IGenerateFileOptions } from '../utils/Options'
+import { isHelpOption } from '../shared/isHelpOption'
+import { IGenerateFileOptions } from '../shared/Options'
 
 const prisma = new PrismaClient()
 
 module.exports = {
   name: 'default-configs',
   alias: 'configs',
-  description: 'Store default configs (example: --not-index by default)',
+  description: 'Store default configs',
   run: async (toolbox: Toolbox) => {
     const { parameters, print, createHelp, prompt } = toolbox
     const helper = () => {
