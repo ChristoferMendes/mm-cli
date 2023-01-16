@@ -1,18 +1,18 @@
-import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import hasReactNative from '../../../shared/hasReactNative'
 import { hasStyledComponents } from '../../../shared/hasStyledComponents'
+import { ITreatTemplateFile } from './ITreatTemplateFile'
 
-export async function treatTemplateFile(
-  toolbox: Toolbox,
-  targets: string[]
-): Promise<string[]> {
+export async function treatTemplateFile({
+  toolbox,
+  targets,
+}: ITreatTemplateFile): Promise<string[]> {
   const { filesystem } = toolbox
   const reactKey = 'react'
   const reactNativeKey = 'reactNative'
   const reactWithSyledComponentsKey = 'reactWithStyled'
   const reactNativeWithStyledComponentsKey = 'reactNativeWithSyledComponentes'
 
-  const [, , notIndexTarget] = targets
+  const [, notIndexTarget] = targets
 
   const notIndexExporter = notIndexTarget && 'index-exporter.ejs'
 

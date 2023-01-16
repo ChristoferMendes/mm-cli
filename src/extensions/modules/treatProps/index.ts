@@ -7,6 +7,7 @@ export async function treatProps({
 }: ITreatProps): Promise<TreatPropsReturn> {
   const extension = 'ts'
   const { filesystem } = toolbox
+
   const nativeBaseIsPresent = await hasNativeBase({
     filesystem,
   })

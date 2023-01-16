@@ -4,4 +4,5 @@ export interface ITreatTarget {
   toolbox: Toolbox
   folder: `src/${string}`
   name: string
+  notIndexIsPresent: boolean
 }

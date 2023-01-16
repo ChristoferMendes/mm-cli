@@ -25,11 +25,6 @@ module.exports = {
             alias: null,
             description: 'Generate a file with a index as a main (default)',
           },
-          {
-            flag: '--js',
-            alias: null,
-            description: 'Creates a jsx file (default is a tsx file).',
-          },
         ],
         commandName: 'generate:page',
       })
@@ -48,7 +43,7 @@ module.exports = {
     }
 
     const name = parameters.first
-    const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
+    const nameToUpperCase = toolbox.strings.upperFirst(name)
 
     await createFile('src/components', nameToUpperCase)
     print.newline()

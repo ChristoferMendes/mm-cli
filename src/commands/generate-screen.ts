@@ -25,12 +25,6 @@ module.exports = {
             alias: null,
             description: 'Generate a file with a index as a main (default)',
           },
-          {
-            flag: '--js',
-            alias: null,
-            description:
-              'Creates a javascript file (default is a Typescript file).',
-          },
         ],
         commandName: 'generate:screen',
       })
@@ -49,7 +43,7 @@ module.exports = {
     }
 
     const name = parameters.first
-    const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
+    const nameToUpperCase = toolbox.strings.upperFirst(name)
 
     await createFile('src/screens', nameToUpperCase)
     print.newline()

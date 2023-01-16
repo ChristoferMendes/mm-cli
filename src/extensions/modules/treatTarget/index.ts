@@ -1,4 +1,3 @@
-import { prisma } from '../../../prisma'
 import { hasStyledComponents } from '../../../shared/hasStyledComponents'
 import { ITreatTarget } from './ITreatTarget'
 
@@ -6,37 +5,31 @@ export async function treatTarget({
   toolbox,
   folder,
   name,
+  notIndexIsPresent,
 }: ITreatTarget): Promise<string[]> {
-  const {
-    parameters: { options },
-    filesystem,
-  } = toolbox
+  const { filesystem } = toolbox
 
-  const { notI, notIndex } = options
-  const { index: notIndexConfig } =
-    (await prisma.defaultConfig.findFirst()) ?? { index: false }
-
-  const defaultTarget = 'default'
-  const notIndexTargets = 'notIndex'
-
-  const styledComponentIsPresent = await hasStyledComponents({ filesystem })
-  const styledTargetFolder =
-    styledComponentIsPresent && `${folder}/${name}/styles.ts`
+  const defaultTargetsKey = 'default'
+  const notIndexTargetsKey = 'notIndex'
 
   const defaultTargetFolder = `${folder}/${name}/index.tsx`
   const notIndexTargetFolder = `${folder}/${name}/${name}.tsx`
   const notIndexExporterTargetFolder = `${folder}/${name}/index.tsx`
 
+  const styledComponentIsPresent = await hasStyledComponents({ filesystem })
+  const styledTargetFolder =
+    styledComponentIsPresent && `${folder}/${name}/styles.ts`
+
   const target = {
-    [defaultTarget]: [defaultTargetFolder, styledTargetFolder],
-    [notIndexTargets]: [
+    [defaultTargetsKey]: [defaultTargetFolder, styledTargetFolder],
+    [notIndexTargetsKey]: [
       notIndexTargetFolder,
-      styledTargetFolder,
       notIndexExporterTargetFolder,
+      styledTargetFolder,
     ],
   }
 
-  if (notI || notIndex || notIndexConfig) return target[notIndexTargets]
+  if (notIndexIsPresent) return target[notIndexTargetsKey]
 
-  return target[defaultTarget]
+  return target[defaultTargetsKey]
 }
