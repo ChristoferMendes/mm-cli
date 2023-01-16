@@ -64,7 +64,9 @@ module.exports = {
 
     const { notI, notIndex } = parameters.options as IGenerateFileOptions
     if (typeof notI === 'boolean' || typeof notIndex === 'boolean') {
-      return print.error('oh no')
+      return print.error(
+        'Please, type $ mm default-configs --not-index=<true or false>'
+      )
     }
 
     const config = await prisma.defaultConfig.findFirst()

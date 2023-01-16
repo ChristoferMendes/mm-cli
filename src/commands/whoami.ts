@@ -1,6 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { prisma } from '../prisma'
+import { timerString } from '../shared/timerString'
 
 module.exports = {
   name: 'whoami',
@@ -25,10 +26,6 @@ module.exports = {
     print.info(`Name: ${user.name}.`)
     print.info(`Email: ${user.email}.`)
     print.newline()
-    print.info(
-      `Done in ${print.colors.cyan(
-        String((timeElapsedInMs() / 1000).toFixed(2))
-      )} seconds.`
-    )
+    print.info('Done in ' + timerString(timeElapsedInMs))
   },
 } as Command

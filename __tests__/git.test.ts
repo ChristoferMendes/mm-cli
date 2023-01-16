@@ -22,6 +22,8 @@ describe('Git commands', () => {
 
   describe('Command git-clone', () => {
     it('should clone a repository', async () => {
+      const tenSeconds = 10000
+      jest.setTimeout(tenSeconds)
       const output = await cli(
         'git-clone box-shadow-generator --name ChristoferMendes'
       )

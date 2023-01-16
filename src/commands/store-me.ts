@@ -2,6 +2,7 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
+import { timerString } from '../shared/timerString'
 
 module.exports = {
   name: 'store-me',
@@ -19,36 +20,26 @@ module.exports = {
         description: 'store your credentials to be used in many other commands',
         example: '$ mm store-me john johndoe@gmail.com',
       })
-      return
+      print.newline()
+      return print.info(timerString(timeElapsedInMs))
     }
 
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
-    const name = parameters.array.filter((item) => !item.match(emailRegex))[0]
-    const email = parameters.array.filter((item) => item.match(emailRegex))[0]
+    const [name] = parameters.array.filter((item) => !item.match(emailRegex))
+    const [email] = parameters.array.filter((item) => item.match(emailRegex))
 
-    if (!name && !email) {
-      return print.error('At least name or email must be specified')
+    if (!name || !email) {
+      return print.error('Name and email must be specified to create')
     }
 
     const user = await prisma.user.findFirst()
     if (user) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          email: email ?? user.email,
-          name: name ?? user.name,
-        },
-      })
-
-      print.success('Credentials updated')
-      print.newline()
       print.info(
-        `Done in ${print.colors.cyan(
-          String(timeElapsedInMs() / 1000)
-        )} seconds.`
+        'Your already have your credentials stored. To update them, please type $ mm update-me <name> <email>'
       )
-      return
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     await prisma.user.create({
@@ -59,11 +50,9 @@ module.exports = {
     })
 
     print.success('Your credentials are stored')
+    print.info(`Name: ${user.name}`)
+    print.info(`Email: ${user.email}`)
     print.newline()
-    print.info(
-      `Done in ${print.colors.cyan(
-        String((timeElapsedInMs() / 1000).toFixed(2))
-      )} seconds.`
-    )
+    return print.info('Done in ' + timerString(timeElapsedInMs))
   },
 } as Command

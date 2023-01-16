@@ -8,10 +8,14 @@ module.exports = (toolbox: GluegunToolbox) => {
   const {
     template,
     print: { success },
+    parameters,
   } = toolbox
 
   async function createFile(folder: `src/${string}`, name: string | undefined) {
-    const notIndexIsPresent = await treatNotIndexOption({ toolbox })
+    const { index: indexFlag } = parameters.options
+    const notIndex = await treatNotIndexOption({ toolbox })
+
+    const notIndexIsPresent = notIndex && !indexFlag
 
     const targets = await treatTarget({
       toolbox,
@@ -23,7 +27,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     const templateFile = await treatTemplateFile({ toolbox, targets })
     const props = await treatProps({ name, toolbox })
 
-    targets.filter(Boolean).forEach((target, index) => {
+    targets.filter(Boolean).forEach(async (target, index) => {
       template.generate({
         target,
         template: templateFile.filter(Boolean)[index],
@@ -32,10 +36,10 @@ module.exports = (toolbox: GluegunToolbox) => {
     })
 
     if (notIndexIsPresent) {
-      return success(`Generated file at ${folder}/${name}/${name}.tsx`)
+      return success(`Generated file at ${folder}/${name}/${name}.tsx!`)
     }
 
-    return success(`Generated file at ${folder}/${name}/index.tsx`)
+    return success(`Generated file at ${folder}/${name}/index.tsx!`)
   }
 
   toolbox.createFile = createFile

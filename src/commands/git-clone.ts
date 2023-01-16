@@ -3,6 +3,7 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
+import { timerString } from '../shared/timerString'
 
 module.exports = {
   name: 'git-clone',
@@ -14,6 +15,7 @@ module.exports = {
 
     const haveHelp = isHelpOption(parameters.options)
     const repository = parameters.first
+    const { name } = parameters.options
 
     if (haveHelp || !repository) {
       createHelp({
@@ -26,22 +28,17 @@ module.exports = {
 
     const user = await prisma.user.findFirst()
 
-    const userName = user?.name ?? (await system.run('git config user.name'))
+    const gitUserConfigured = await system.run('git config user.name')
+    const userNameUsed = name ?? user.name ?? gitUserConfigured
 
-    const nameAndRepo = `${userName.trim()}/${repository.trim()}`
+    const nameAndRepo = `${userNameUsed.trim()}/${repository.trim()}`
 
     const command = `git clone git@github.com:${nameAndRepo}.git`
 
     try {
       await system.exec(command)
-      print.success('Cloned your repository with succes!')
+      print.success('Cloned your repository with success!')
       print.info(`Repository name: ${print.colors.cyan(repository)}.`)
-      print.newline()
-      print.info(
-        `Done in ${print.colors.cyan(
-          String((timeElapsedInMs() / 1000).toFixed(2))
-        )} seconds.`
-      )
       const lastRepo = await prisma.lastRepoCloned.findFirst()
 
       if (!lastRepo) {
@@ -58,15 +55,13 @@ module.exports = {
           name: repository,
         },
       })
+      print.newline()
+      print.info('Done in ' + timerString(timeElapsedInMs))
     } catch (error) {
       const glueGunError = error as GluegunError
       print.info(glueGunError.message)
       print.newline()
-      print.info(
-        `Done in ${print.colors.cyan(
-          String((timeElapsedInMs() / 1000).toFixed(2))
-        )} seconds.`
-      )
+      print.info('Done in ' + timerString(timeElapsedInMs))
     }
   },
 } as Command

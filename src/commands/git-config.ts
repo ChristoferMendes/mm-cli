@@ -29,7 +29,7 @@ module.exports = {
           },
         ],
         commandName: 'git-config',
-        alias: 'g-conf',
+        alias: 'config',
         description: 'Configures your git credentials',
       })
       print.newline()

@@ -20,7 +20,7 @@ describe('Generate file tests', () => {
     it('should create a file in src/pages/HomeTest', async () => {
       const output = await cli('generate-page HomeTest --index')
       expect(output).toContain(
-        'Generated HomeTest file at src/pages/HomeTest/index.tsx!'
+        'Generated file at src/pages/HomeTest/index.tsx!'
       )
       const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
       expect(fileCreated).toContain('export function HomeTest()')
@@ -32,7 +32,7 @@ describe('Generate file tests', () => {
       const output = await cli('generate-component HomeTest --index')
 
       expect(output).toContain(
-        'Generated HomeTest file at src/components/HomeTest/index.tsx'
+        'Generated file at src/components/HomeTest/index.tsx!'
       )
 
       const fileCreated = filesystem.read(`${componentFilePath}/index.tsx`)
@@ -45,7 +45,7 @@ describe('Generate file tests', () => {
       const output = await cli('generate-screen HomeTest --index')
 
       expect(output).toContain(
-        'Generated HomeTest file at src/screens/HomeTest/index.tsx'
+        'Generated file at src/screens/HomeTest/index.tsx!'
       )
 
       const fileCreated = filesystem.read(`${screenFilePath}/index.tsx`)
@@ -66,7 +66,7 @@ describe('Generate file tests', () => {
       await system.exec('mv packageMain.json package.json')
 
       expect(output).toContain(
-        'Generated HomeTest file at src/pages/HomeTest/index.tsx!'
+        'Generated file at src/pages/HomeTest/index.tsx!'
       )
 
       const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
@@ -87,7 +87,7 @@ describe('Generate file tests', () => {
       await system.exec('mv packageMain.json package.json')
 
       expect(output).toContain(
-        'Generated HomeTest file at src/pages/HomeTest/index.tsx'
+        'Generated file at src/pages/HomeTest/index.tsx!'
       )
 
       const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
@@ -112,7 +112,7 @@ describe('Generate file tests', () => {
       await system.exec('mv packageMain.json package.json')
 
       expect(output).toContain(
-        'Generated HomeTest file at src/pages/HomeTest/index.tsx'
+        'Generated file at src/pages/HomeTest/index.tsx!'
       )
 
       const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
@@ -123,6 +123,20 @@ describe('Generate file tests', () => {
       const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
       expect(fileCreated).toContain("import { Text } from 'react-native';")
       expect(fileCreated).toContain('<Container>')
+    })
+  })
+
+  describe('Generate native-base file', () => {
+    it('should create a file with native-base setup', async () => {
+      await system.exec('mv package.json packageMain.json')
+      await system.exec(
+        'cp ./__tests__/mocks/package.json/moc-native-base.json ./package.json'
+      )
+      const output = await cli('gen-screen HomeTest --index')
+      console.log(output)
+
+      await system.exec('rm -rf package.json')
+      await system.exec('mv packageMain.json package.json')
     })
   })
 })

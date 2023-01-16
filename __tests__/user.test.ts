@@ -23,7 +23,9 @@ describe('User tests.', () => {
 
   describe('Command update-me', () => {
     it('should update the user credentials', async () => {
-      const output = await cli('update-me testName2 testuser2@gmail.com')
+      const output = await cli(
+        'update-me ChristoferMendes christoferluizdsm@gmail.com'
+      )
       expect(output).not.toContain('At least name or email must be specified')
     })
   })

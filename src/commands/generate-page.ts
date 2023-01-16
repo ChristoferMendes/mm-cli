@@ -42,7 +42,7 @@ module.exports = {
     const name = parameters.first
     const nameToUpperCase = toolbox.strings.upperFirst(name)
 
-    createFile('src/pages', nameToUpperCase)
+    await createFile('src/pages', nameToUpperCase)
     print.newline()
     print.info('Done in ' + timerString(timeElapsedInMs))
   },
