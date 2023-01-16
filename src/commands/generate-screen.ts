@@ -1,6 +1,7 @@
 import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
 import { isHelpOption } from '../shared/isHelpOption'
+import { timerString } from '../shared/timerString'
 
 module.exports = {
   name: 'generate-screen',
@@ -28,17 +29,13 @@ module.exports = {
         ],
         commandName: 'generate:screen',
       })
-      return
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     if (!parameters.first) {
       print.error('Name must be specified.')
       print.newline()
-      print.info(
-        `Done in ${print.colors.cyan(
-          String((timeElapsedInMs() / 1000).toFixed(2))
-        )} seconds.`
-      )
+      print.info('Done in ' + timerString(timeElapsedInMs))
       return
     }
 
@@ -47,10 +44,6 @@ module.exports = {
 
     await createFile('src/screens', nameToUpperCase)
     print.newline()
-    print.info(
-      `Done in ${print.colors.cyan(
-        String((timeElapsedInMs() / 1000).toFixed(2))
-      )} seconds.`
-    )
+    print.info('Done in ' + timerString(timeElapsedInMs))
   },
 } as Command

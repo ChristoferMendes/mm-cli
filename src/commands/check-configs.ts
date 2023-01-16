@@ -8,14 +8,15 @@ module.exports = {
   run: async (toolbox: Toolbox) => {
     const { print } = toolbox
 
-    const defaultObject = { index: null }
+    const defaultObject = { notIndex: undefined }
 
-    const { index } = (await prisma.defaultConfig.findFirst()) ?? defaultObject
+    const { notIndex } =
+      (await prisma.defaultConfig.findFirst()) || defaultObject
 
-    if (!index) {
+    if (notIndex === undefined) {
       return print.error('You do not stored any config yet')
     }
 
-    return print.success({ index })
+    return print.success({ notIndex })
   },
 } as Command

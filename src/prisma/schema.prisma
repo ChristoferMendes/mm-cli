@@ -17,7 +17,7 @@ model User {
 
 model DefaultConfig {
   id    Int     @id @default(autoincrement())
-  index Boolean
+  notIndex Boolean
 }
 
 model lastRepoCloned {

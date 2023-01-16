@@ -23,7 +23,7 @@ module.exports = (toolbox: GluegunToolbox) => {
       parameters.options as IGenerateFileOptions
 
     const defaultUserConfigs = await prisma.defaultConfig.findFirst()
-    const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.index
+    const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.notIndex
 
     const fileExtension = js ? 'jsx' : 'tsx'
 

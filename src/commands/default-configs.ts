@@ -37,7 +37,7 @@ module.exports = {
         await prisma.defaultConfig.update({
           where: { id: config.id },
           data: {
-            index: confirmation,
+            notIndex: confirmation,
           },
         })
         return print.success(
@@ -47,7 +47,7 @@ module.exports = {
 
       await prisma.defaultConfig.create({
         data: {
-          index: confirmation,
+          notIndex: confirmation,
         },
       })
 
@@ -73,7 +73,7 @@ module.exports = {
       await prisma.defaultConfig.update({
         where: { id: config.id },
         data: {
-          index: JSON.parse(notI || notIndex),
+          notIndex: JSON.parse(notI || notIndex),
         },
       })
       return print.success(
@@ -83,7 +83,7 @@ module.exports = {
 
     await prisma.defaultConfig.create({
       data: {
-        index: JSON.parse(notI || notIndex),
+        notIndex: JSON.parse(notI || notIndex),
       },
     })
 

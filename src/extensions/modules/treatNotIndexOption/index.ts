@@ -14,7 +14,7 @@ export async function treatNotIndexOption({
 
   const defaultConfigStored = await prisma.defaultConfig.findFirst()
 
-  const { index: notIndexConfig } = defaultConfigStored ?? { index: false }
+  const { notIndex: notIndexConfig } = defaultConfigStored ?? { index: false }
 
   const notIndexIsPresent = notI || notIndex || notIndexConfig
 
