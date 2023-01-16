@@ -51,7 +51,11 @@ module.exports = {
     const name = parameters.first
     const nameToUpperCase = name[0].toUpperCase() + name.slice(1)
 
-    await createFile('src/pages', nameToUpperCase)
+    try {
+      await createFile('src/pages', nameToUpperCase)
+    } catch (e) {
+      console.log(e)
+    }
     print.newline()
     print.info(
       `Done in ${print.colors.cyan(

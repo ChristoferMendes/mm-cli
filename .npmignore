@@ -1,0 +1,16 @@
+.DS_Store
+node_modules
+npm-debug.log
+coverage
+.nyc_output
+dist
+.vscode
+src/pages
+src/components
+src/screens
+src/extensions/create-file-legacy.ts
+src/extensions/create-help-legacy.ts
+build/extensions/create-file-legacy.js
+build/extensions/create-file-legacy.js.map
+build/extensions/create-help-legacy.js
+build/extensions/create-help-legacy.js.map

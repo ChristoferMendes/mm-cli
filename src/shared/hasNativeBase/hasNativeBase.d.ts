@@ -1,5 +1,5 @@
 import { GluegunFilesystem } from 'gluegun'
 
-export interface IIsReactNative {
+export interface IHasNativeBase {
   filesystem: GluegunFilesystem
 }

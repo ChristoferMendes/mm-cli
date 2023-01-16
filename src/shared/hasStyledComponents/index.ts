@@ -1,4 +1,4 @@
-import { IHaveStyledComponent } from './haveStyledComponent'
+import { IHasStyledComponents } from './haveStyledComponents'
 
 interface IPackageJson {
   dependencies: {
@@ -6,9 +6,9 @@ interface IPackageJson {
   }
 }
 
-export async function haveStyledComponent({
+export async function hasStyledComponents({
   filesystem,
-}: IHaveStyledComponent): Promise<boolean> {
+}: IHasStyledComponents): Promise<boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

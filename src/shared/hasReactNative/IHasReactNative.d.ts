@@ -1,5 +1,5 @@
 import { GluegunFilesystem } from 'gluegun'
 
-export interface IHaveNativeBase {
+export interface IHasReactNative {
   filesystem: GluegunFilesystem
 }

@@ -1,5 +1,5 @@
 import { GluegunFilesystem } from 'gluegun'
 
-export interface IHaveStyledComponent {
+export interface IHasStyledComponents {
   filesystem: GluegunFilesystem
 }

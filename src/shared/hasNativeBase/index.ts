@@ -1,4 +1,4 @@
-import { IHaveNativeBase } from './haveNativeBase'
+import { IHasNativeBase } from './hasNativeBase'
 
 interface IPackageJson {
   dependencies: {
@@ -6,9 +6,9 @@ interface IPackageJson {
   }
 }
 
-export async function haveNativeBase({
+export async function hasNativeBase({
   filesystem,
-}: IHaveNativeBase): Promise<boolean> {
+}: IHasNativeBase): Promise<boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

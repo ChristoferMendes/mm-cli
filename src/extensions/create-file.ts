@@ -1,102 +1,28 @@
 import { GluegunToolbox } from 'gluegun'
-import { prisma } from '../prisma'
-import { generateStyledComponent } from '../shared/generateStyledComponent'
-import { haveNativeBase } from '../shared/haveNativeBase'
-import { haveStyledComponent } from '../shared/haveStyledComponent'
-import isReactNative from '../shared/isReactNative'
-import { IGenerateFileOptions } from '../shared/Options'
+import { treatProps } from './modules/treatProps'
+import { treatTarget } from './modules/treatTarget'
+import { treatTemplateFile } from './modules/treatTemplateFile'
 
 module.exports = (toolbox: GluegunToolbox) => {
   const {
-    filesystem,
-    print: { success, error },
     template,
-    parameters,
+    print: { success },
   } = toolbox
 
-  async function createFile(folder: string, name: string | undefined) {
-    if (!name) {
-      error('Name must be specified')
-      return
-    }
-    const { js, notIndex, notI, index } =
-      parameters.options as IGenerateFileOptions
+  async function createFile(folder: `src/${string}`, name: string | undefined) {
+    const targets = await treatTarget({ toolbox, folder, name })
+    const templateFile = await treatTemplateFile(toolbox, targets)
+    const props = await treatProps({ name, toolbox })
 
-    const defaultUserConfigs = await prisma.defaultConfig.findFirst()
-    const haveNotIndexOption = notIndex || notI || defaultUserConfigs?.index
-
-    const fileExtension = js ? 'jsx' : 'tsx'
-
-    const folderBasedOnIndexOption =
-      haveNotIndexOption && !index
-        ? `${folder}/${name}/${name}.${fileExtension}`
-        : `${folder}/${name}/index.${fileExtension}`
-
-    const isStyledComponent = await haveStyledComponent({ filesystem })
-
-    if (isStyledComponent) {
-      const reactNativeStyledComponentsTemplates = [
-        'react-rn-styled.tsx.ejs',
-        'styled-rn.tsx.ejs',
-      ]
-
-      const reactStyledComponentsTemplates = [
-        'react-styled.tsx.ejs',
-        'styled.tsx.ejs',
-      ]
-
-      const styledTemplateFiles = (await isReactNative({ filesystem }))
-        ? reactNativeStyledComponentsTemplates
-        : reactStyledComponentsTemplates
-
-      const extensionWithoutX = fileExtension.replace('x', '')
-
-      if (haveNotIndexOption) {
-        await template.generate({
-          template: `index-template.tsx.ejs`,
-          target: `${folder}/${name}/index.${fileExtension}`,
-          props: { name },
-        })
-      }
-
-      await generateStyledComponent({
-        folderBasedOnIndexOption,
-        styledTemplateFiles,
-        props: { name, styledComponentExtension: extensionWithoutX },
-        targetFolder: folder,
-        template,
-      })
-
-      success(
-        `Generated ${parameters.first} file at ${folderBasedOnIndexOption}!`
-      )
-      return
-    }
-
-    if (haveNotIndexOption) {
+    targets.filter(Boolean).forEach(async (target, index) => {
       await template.generate({
-        template: `index-template.tsx.ejs`,
-        target: `${folder}/${name}/index.${fileExtension}`,
-        props: { name },
+        target,
+        template: templateFile.filter(Boolean)[index],
+        props,
       })
-    }
-
-    const templateFile = (await isReactNative({ filesystem }))
-      ? 'component-rn.tsx.ejs'
-      : 'component.tsx.ejs'
-
-    const isNativeBase = await haveNativeBase({ filesystem })
-    const nativeImport = isNativeBase ? 'native-base' : 'react-native'
-
-    await template.generate({
-      template: templateFile,
-      target: folderBasedOnIndexOption,
-      props: { name, native: nativeImport },
     })
 
-    success(
-      `Generated ${parameters.first} file at ${folderBasedOnIndexOption}!`
-    )
+    success(`Generated file at ${folder}/${name}`)
   }
 
   toolbox.createFile = createFile

@@ -1,4 +1,4 @@
-import type { IIsReactNative } from './IIsReactNative'
+import type { IHasReactNative } from './IHasReactNative'
 
 interface IPackageJson {
   dependencies: {
@@ -6,9 +6,9 @@ interface IPackageJson {
   }
 }
 
-export default async function isReactNative({
+export default async function hasReactNative({
   filesystem,
-}: IIsReactNative): Promise<void | boolean> {
+}: IHasReactNative): Promise<void | boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'
