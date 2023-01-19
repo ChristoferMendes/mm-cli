@@ -18,25 +18,24 @@ module.exports = {
     const { name } = parameters.options
 
     if (haveHelp || !repository) {
-      createHelp({
+      return createHelp({
         commandName: 'git-clone',
         description: 'Pass the repository name you want to clone',
         example: '$ mm git-clone my-awesome-repo',
       })
-      return
     }
 
     const user = await prisma.user.findFirst()
 
     const gitUserConfigured = await system.run('git config user.name')
-    const userNameUsed = name ?? user.name ?? gitUserConfigured
+    const userNameUsed = name ?? user?.name ?? gitUserConfigured
 
     const nameAndRepo = `${userNameUsed.trim()}/${repository.trim()}`
 
-    const command = `git clone git@github.com:${nameAndRepo}.git`
+    const gitCloneCommand = `git clone git@github.com:${nameAndRepo}.git`
 
     try {
-      await system.exec(command)
+      await system.exec(gitCloneCommand)
       print.success('Cloned your repository with success!')
       print.info(`Repository name: ${print.colors.cyan(repository)}.`)
       const lastRepo = await prisma.lastRepoCloned.findFirst()

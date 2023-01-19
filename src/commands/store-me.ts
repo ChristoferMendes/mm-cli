@@ -42,7 +42,7 @@ module.exports = {
       return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
-    await prisma.user.create({
+    const userCreated = await prisma.user.create({
       data: {
         name,
         email,
@@ -50,8 +50,8 @@ module.exports = {
     })
 
     print.success('Your credentials are stored')
-    print.info(`Name: ${user.name}`)
-    print.info(`Email: ${user.email}`)
+    print.info(`Name: ${userCreated.name}`)
+    print.info(`Email: ${userCreated.email}`)
     print.newline()
     return print.info('Done in ' + timerString(timeElapsedInMs))
   },
