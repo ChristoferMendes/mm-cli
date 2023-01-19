@@ -1,5 +1,5 @@
 {
-  "name": "mm-tec-cli-test",
+  "name": "mm-tec-cli",
   "version": "1.0.0",
   "description": "A Command Line Interface for generate files",
   "types": "build/types/types.d.ts",
