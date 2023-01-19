@@ -29,4 +29,12 @@ describe('User tests.', () => {
       expect(output).not.toContain('At least name or email must be specified')
     })
   })
+
+  describe('Command check-configs', () => {
+    it('should list the user configs', async () => {
+      await cli('configs --not-i=true')
+      const output = await cli('check-configs')
+      expect(output).toContain('notIndex: true')
+    })
+  })
 })

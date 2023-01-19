@@ -2,7 +2,11 @@ import { system, filesystem } from 'gluegun'
 
 const src = filesystem.path(__dirname, '..')
 
-const cli = async (cmd) =>
+afterAll(async () => {
+  await cli('git-config ChristoferMendes christoferluizdsm@gmail.com')
+})
+
+const cli = async (cmd: string) =>
   system.run('node ' + filesystem.path(src, 'bin', 'mm') + ` ${cmd}`)
 
 describe('Git commands', () => {
@@ -22,8 +26,6 @@ describe('Git commands', () => {
 
   describe('Command git-clone', () => {
     it('should clone a repository', async () => {
-      const tenSeconds = 10000
-      jest.setTimeout(tenSeconds)
       const output = await cli(
         'git-clone box-shadow-generator --name ChristoferMendes'
       )
@@ -31,6 +33,15 @@ describe('Git commands', () => {
       await system.run('rm -rf box-shadow-generator')
       expect(output).toMatch('Cloned your repository with success!')
       expect(output).toMatch('box-shadow-generator')
+    })
+  })
+
+  describe('Command git-rm-repo', () => {
+    it('should remove the last repository cloned', async () => {
+      await cli('git-clone --name ChristoferMendes box-shadow-generator')
+
+      const output = await cli('rm-repo')
+      expect(output).toContain('Repository box-shadow-generator deleted!')
     })
   })
 })
