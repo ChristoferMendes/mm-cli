@@ -77,7 +77,6 @@ describe('Git commands', () => {
     it('should not break the command flow', async () => {
       const output = await cli('git-check --flagThatDoesNotExist')
 
-      console.log(output)
       expect(output).not.toBeInstanceOf(Error)
     })
   })

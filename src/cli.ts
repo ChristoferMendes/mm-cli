@@ -16,11 +16,11 @@ async function run(argv) {
       const { print } = toolbox
       const onError = (err: Error, data: string) => {
         if (err) {
-          console.log('Something went wrong...')
+          print.error('Something went wrong...')
           console.dir(err)
           return
         }
-        console.log(data)
+        print.info(data)
       }
 
       print.success(
