@@ -14,7 +14,7 @@ export async function treatTarget({
   const notIndexTargetsKey = 'notIndex'
 
   const extension = typescriptIsPresent ? 'ts' : 'js'
-  const reactExtension = `${extension}.x`
+  const reactExtension = `${extension}x`
   const defaultPath = `${folder}/${name}`
 
   const defaultTargetFolder = `${defaultPath}/index.${reactExtension}`
