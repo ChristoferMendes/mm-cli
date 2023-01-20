@@ -1,7 +1,6 @@
 import { GluegunToolbox } from 'gluegun'
 import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
-import { IGitConfigOptions } from '../shared/Options/Git-Config.options'
 import { timerString } from '../shared/timerString'
 
 module.exports = {
