@@ -20,7 +20,10 @@ module.exports = {
     }
 
     const oldUser = await prisma.user.findFirst()
-    if (!oldUser) print.error('You do not have any credentials stored yet')
+
+    if (!oldUser) {
+      return print.error('You do not have any credentials stored yet')
+    }
 
     const newUser = await prisma.user.update({
       where: { id: oldUser.id },
