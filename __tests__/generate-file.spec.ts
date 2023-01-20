@@ -130,10 +130,18 @@ describe('Generate file tests', () => {
     it('should create a file with native-base setup', async () => {
       await system.exec('mv package.json packageMain.json')
       await system.exec(
-        'cp ./__tests__/mocks/package.json/moc-native-base.json ./package.json'
+        'cp ./__tests__/mocks/package.json/mock-native-base.json ./package.json'
       )
       const output = await cli('gen-screen HomeTest --index')
-      console.log(output)
+
+      expect(output).toContain(
+        'Generated file at src/screens/HomeTest/index.tsx'
+      )
+
+      const fileCreated = filesystem.read(`${screenFilePath}/index.tsx`)
+
+      expect(fileCreated).toContain("import { View, Text } from 'native-base';")
+      expect(fileCreated).toContain('<View>')
 
       await system.exec('rm -rf package.json')
       await system.exec('mv packageMain.json package.json')

@@ -10,10 +10,7 @@ module.exports = {
     const { print, system } = toolbox
     const timeElapsedInMs = system.startTimer()
 
-    const defaultObject = { notIndex: undefined }
-
-    const { notIndex } =
-      (await prisma.defaultConfig.findFirst()) || defaultObject
+    const { notIndex = undefined } = await prisma.defaultConfig.findFirst()
 
     if (notIndex === undefined) {
       return print.error('You do not stored any config yet')

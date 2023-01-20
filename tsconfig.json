@@ -17,6 +17,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "outDir": "build",
+    "resolveJsonModule": true,
     "strict": false,
     "target": "es5",
     "declaration": true,
