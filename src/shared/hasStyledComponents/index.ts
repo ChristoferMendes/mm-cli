@@ -1,10 +1,5 @@
+import { IPackageJson } from '../PackageJsonInterface'
 import { IHasStyledComponents } from './haveStyledComponents'
-
-interface IPackageJson {
-  dependencies: {
-    [key: string]: string
-  }
-}
 
 export async function hasStyledComponents({
   filesystem,

@@ -1,10 +1,5 @@
+import { IPackageJson } from '../PackageJsonInterface'
 import type { IHasReactNative } from './IHasReactNative'
-
-interface IPackageJson {
-  dependencies: {
-    [key: string]: string
-  }
-}
 
 export default async function hasReactNative({
   filesystem,

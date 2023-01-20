@@ -6,19 +6,24 @@ export async function treatTarget({
   folder,
   name,
   notIndexIsPresent,
+  typescriptIsPresent,
 }: ITreatTarget): Promise<string[]> {
   const { filesystem } = toolbox
 
   const defaultTargetsKey = 'default'
   const notIndexTargetsKey = 'notIndex'
 
-  const defaultTargetFolder = `${folder}/${name}/index.tsx`
-  const notIndexTargetFolder = `${folder}/${name}/${name}.tsx`
-  const notIndexExporterTargetFolder = `${folder}/${name}/index.tsx`
+  const extension = typescriptIsPresent ? 'ts' : 'js'
+  const reactExtension = `${extension}.x`
+  const defaultPath = `${folder}/${name}`
+
+  const defaultTargetFolder = `${defaultPath}/index.${reactExtension}`
+  const notIndexTargetFolder = `${defaultPath}/${name}.${reactExtension}`
+  const notIndexExporterTargetFolder = defaultTargetFolder
 
   const styledComponentIsPresent = await hasStyledComponents({ filesystem })
   const styledTargetFolder =
-    styledComponentIsPresent && `${folder}/${name}/styles.ts`
+    styledComponentIsPresent && `${defaultPath}/styles.${extension}`
 
   const target = {
     [defaultTargetsKey]: [defaultTargetFolder, styledTargetFolder],

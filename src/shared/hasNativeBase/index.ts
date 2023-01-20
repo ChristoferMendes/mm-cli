@@ -1,10 +1,5 @@
+import { IPackageJson } from '../PackageJsonInterface'
 import { IHasNativeBase } from './hasNativeBase'
-
-interface IPackageJson {
-  dependencies: {
-    [key: string]: string
-  }
-}
 
 export async function hasNativeBase({
   filesystem,

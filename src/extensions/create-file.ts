@@ -1,4 +1,5 @@
 import { GluegunToolbox } from 'gluegun'
+import { hasTypescript } from '../shared/hasTypescript'
 import { treatNotIndexOption } from './modules/treatNotIndexOption'
 import { treatProps } from './modules/treatProps'
 import { treatTarget } from './modules/treatTarget'
@@ -9,6 +10,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     template,
     print: { success },
     parameters,
+    filesystem,
   } = toolbox
 
   async function createFile(folder: `src/${string}`, name: string | undefined) {
@@ -17,17 +19,20 @@ module.exports = (toolbox: GluegunToolbox) => {
 
     const notIndexIsPresent = notIndex && !indexFlag
 
+    const typescriptIsPresent = await hasTypescript({ filesystem })
+
     const targets = await treatTarget({
       toolbox,
       folder,
       name,
       notIndexIsPresent,
+      typescriptIsPresent,
     })
 
     const templateFile = await treatTemplateFile({ toolbox, targets })
-    const props = await treatProps({ name, toolbox })
+    const props = await treatProps({ name, toolbox, typescriptIsPresent })
 
-    targets.filter(Boolean).forEach(async (target, index) => {
+    targets.filter(Boolean).forEach((target, index) => {
       template.generate({
         target,
         template: templateFile.filter(Boolean)[index],

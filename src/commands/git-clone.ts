@@ -8,7 +8,8 @@ import { timerString } from '../shared/timerString'
 module.exports = {
   name: 'git-clone',
   alias: 'clone',
-  description: 'Clone a repository from your git',
+  description:
+    'Clone a repository from your git (Using your credentials stored or your local git configurations)',
   run: async (toolbox: GluegunToolbox) => {
     const { system, parameters, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
@@ -22,6 +23,14 @@ module.exports = {
         commandName: 'git-clone',
         description: 'Pass the repository name you want to clone',
         example: '$ mm git-clone my-awesome-repo',
+        options: [
+          {
+            flag: '--name',
+            alias: null,
+            description:
+              'Optionally, you can pass the name of the repository owner with it ($ mm clone react --name Facebook)',
+          },
+        ],
       })
     }
 

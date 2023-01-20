@@ -14,20 +14,20 @@ export async function treatTemplateFile({
 
   const [, notIndexTarget] = targets
 
-  const notIndexExporter = notIndexTarget && 'index-exporter.ejs'
+  const notIndexExporterTemplate = notIndexTarget && 'index-exporter.ejs'
 
-  const templateFile = {
-    [reactKey]: ['react.ejs', notIndexExporter],
-    [reactNativeKey]: ['react-rn.ejs', notIndexExporter],
+  const templateFiles = {
+    [reactKey]: ['react.ejs', notIndexExporterTemplate],
+    [reactNativeKey]: ['react-rn.ejs', notIndexExporterTemplate],
     [reactWithSyledComponentsKey]: [
       'react-styled.ejs',
       'styled.ejs',
-      notIndexExporter,
+      notIndexExporterTemplate,
     ],
     [reactNativeWithStyledComponentsKey]: [
       'react-rn-styled.ejs',
       'styled-rn.ejs',
-      notIndexExporter,
+      notIndexExporterTemplate,
     ],
   }
 
@@ -35,12 +35,14 @@ export async function treatTemplateFile({
   const styledComponentIsPresent = await hasStyledComponents({ filesystem })
 
   if (reactNativeIsPresent && styledComponentIsPresent) {
-    return templateFile[reactNativeWithStyledComponentsKey]
+    return templateFiles[reactNativeWithStyledComponentsKey]
   }
 
-  if (reactNativeIsPresent) return templateFile[reactNativeKey]
+  if (reactNativeIsPresent) return templateFiles[reactNativeKey]
 
-  if (styledComponentIsPresent) return templateFile[reactWithSyledComponentsKey]
+  if (styledComponentIsPresent) {
+    return templateFiles[reactWithSyledComponentsKey]
+  }
 
-  return templateFile[reactKey]
+  return templateFiles[reactKey]
 }

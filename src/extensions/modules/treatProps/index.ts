@@ -4,8 +4,9 @@ import { ITreatProps, TreatPropsReturn } from './ITreatProps'
 export async function treatProps({
   name,
   toolbox,
+  typescriptIsPresent,
 }: ITreatProps): Promise<TreatPropsReturn> {
-  const extension = 'ts'
+  const extension = typescriptIsPresent ? 'ts' : 'js'
   const { filesystem } = toolbox
 
   const nativeBaseIsPresent = await hasNativeBase({

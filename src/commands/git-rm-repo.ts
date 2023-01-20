@@ -31,7 +31,7 @@ module.exports = {
     }
 
     if (!lastRepo.name) {
-      print.error('Your last repository was already deleted')
+      print.error('Your last repository cloned was already deleted')
       print.newline()
       return print.info('Done in ' + timerString(timeElapsedInMs))
     }

@@ -5,7 +5,8 @@ import { timerString } from '../shared/timerString'
 
 module.exports = {
   name: 'git-config',
-  description: 'Configures git credentials',
+  description:
+    'Configures git credentials (If you have credentials stored, this command you set them as your git configurations)',
   alias: 'config',
   run: async (toolbox: GluegunToolbox) => {
     const { parameters, system, print, createHelp } = toolbox
