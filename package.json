@@ -36,9 +36,11 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "4.7.1",
-    "ejs": "3.1.7",
     "figlet": "^1.5.2",
     "gluegun": "latest"
+  },
+  "resolutions": {
+    "ejs": "3.1.7"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.5",
