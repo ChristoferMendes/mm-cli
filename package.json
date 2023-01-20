@@ -1,6 +1,6 @@
 {
   "name": "mm-tec-cli",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "description": "A Command Line Interface for generate files",
   "types": "build/types/types.d.ts",
   "bin": {
@@ -12,7 +12,7 @@
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
-    "build": "rm -rf src/prisma/dev.db && rm -rf src/prisma/dev.db-journal && yarn prisma-reset && yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma",
+    "build": "rm -rf src/prisma/dev.db && rm -rf src/prisma/dev.db-journal && yarn prisma-reset && yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma && yarn test",
     "prepublishOnly": "yarn build",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "test": "jest --verbose --",
