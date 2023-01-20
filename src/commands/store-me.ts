@@ -30,7 +30,9 @@ module.exports = {
     const [email] = parameters.array.filter((item) => item.match(emailRegex))
 
     if (!name || !email) {
-      return print.error('Name and email must be specified to create')
+      print.error('Name and email must be specified to create')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     const user = await prisma.user.findFirst()

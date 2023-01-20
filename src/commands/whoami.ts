@@ -15,11 +15,13 @@ module.exports = {
 
     if (!user) {
       print.info('Your credentials are not stored yet')
-      return print.info(
+      print.info(
         `Please, type ${print.colors.cyan(
           'mm store-me <your-name> <your-email>'
         )}`
       )
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     print.info(`Name: ${user?.name}.`)

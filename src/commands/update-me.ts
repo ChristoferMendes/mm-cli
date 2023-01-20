@@ -16,13 +16,17 @@ module.exports = {
     const [email] = parameters.array.filter((item) => item.match(emailRegex))
 
     if (!name && !email) {
-      return print.error('At least name or email must be specified')
+      print.error('At least name or email must be specified')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     const oldUser = await prisma.user.findFirst()
 
     if (!oldUser) {
-      return print.error('You do not have any credentials stored yet')
+      print.error('You do not have any credentials stored yet')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     const newUser = await prisma.user.update({

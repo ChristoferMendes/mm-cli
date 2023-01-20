@@ -25,11 +25,15 @@ module.exports = {
     const lastRepo = await prisma.lastRepoCloned.findFirst()
 
     if (!lastRepo) {
-      return print.error('You do not cloned any repository')
+      print.error('You do not cloned any repository')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     if (!lastRepo.name) {
-      return print.error('Your last repository was already deleted')
+      print.error('Your last repository was already deleted')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
     }
 
     await system.run(`rm -rf ${lastRepo.name}`)
