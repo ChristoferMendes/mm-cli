@@ -13,7 +13,7 @@ module.exports = {
     const { notIndex } = (await prisma.defaultConfig.findFirst()) ?? {}
 
     if (notIndex === undefined) {
-      return print.error('You do not stored any config yet')
+      return print.error('You do not stored any configuration yet')
     }
     print.success({ notIndex })
     print.newline()
