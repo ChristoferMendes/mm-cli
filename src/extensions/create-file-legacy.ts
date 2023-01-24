@@ -1,12 +1,12 @@
-import { GluegunToolbox } from 'gluegun'
 import { prisma } from '../prisma'
 import { generateStyledComponent } from '../shared/generateStyledComponent'
 import { hasNativeBase } from '../shared/hasNativeBase'
 import { hasStyledComponents } from '../shared/hasStyledComponents'
 import hasReactNative from '../shared/hasReactNative'
 import { IGenerateFileOptions } from '../shared/Options'
+import { Toolbox } from '../@types/gluegun'
 
-module.exports = (toolbox: GluegunToolbox) => {
+module.exports = (toolbox: Toolbox) => {
   const {
     print: { success, error },
     template,

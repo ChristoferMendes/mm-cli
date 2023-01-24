@@ -1,13 +1,13 @@
-import { GluegunToolbox } from 'gluegun'
+import { Toolbox } from '../@types/gluegun'
 
-interface IcreateHelp {
+export interface IcreateHelpLegacy {
   flags: string[]
   aliases: string[]
   descriptions: string[]
   commandName: string
 }
 
-module.exports = (toolbox: GluegunToolbox) => {
+module.exports = (toolbox: Toolbox) => {
   const { print } = toolbox
 
   const createHelpLegacy = ({
@@ -15,7 +15,7 @@ module.exports = (toolbox: GluegunToolbox) => {
     aliases,
     descriptions,
     commandName,
-  }: IcreateHelp) => {
+  }: IcreateHelpLegacy) => {
     print.info(`Flags for ${commandName}`)
     const options = []
     for (let i = 0; i < flags.length; i++) {

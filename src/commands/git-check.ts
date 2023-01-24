@@ -1,5 +1,5 @@
 import { Command } from 'gluegun/build/types/domain/command'
-import { Toolbox } from 'gluegun/build/types/domain/toolbox'
+import { Toolbox } from '../@types/gluegun'
 import { timerString } from '../shared/timerString'
 
 module.exports = {

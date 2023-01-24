@@ -1,6 +1,6 @@
-import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
+import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
 import { timerString } from '../shared/timerString'
@@ -10,7 +10,7 @@ module.exports = {
   alias: 'clone',
   description:
     'Clone a repository from your git (Using your credentials stored or your local git configurations)',
-  run: async (toolbox: GluegunToolbox) => {
+  run: async (toolbox: Toolbox) => {
     const { system, parameters, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
 

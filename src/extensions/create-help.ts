@@ -1,13 +1,11 @@
-import { GluegunToolbox } from 'gluegun'
+import { Toolbox } from '../@types/gluegun'
 
-interface IcreateHelp {
-  options?: [
-    {
-      flag: string
-      alias: string | null
-      description: string
-    }
-  ]
+export interface IcreateHelp {
+  options?: Array<{
+    flag: string
+    alias?: string
+    description: string
+  }>
 
   commandName: string
   description?: string
@@ -15,7 +13,7 @@ interface IcreateHelp {
   alias?: string
 }
 
-module.exports = (toolbox: GluegunToolbox) => {
+module.exports = (toolbox: Toolbox) => {
   const { print } = toolbox
 
   const createHelp = ({

@@ -1,4 +1,4 @@
-import { GluegunToolbox } from 'gluegun'
+import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
 import { isHelpOption } from '../shared/isHelpOption'
 import { timerString } from '../shared/timerString'
@@ -8,7 +8,7 @@ module.exports = {
   description:
     'Configures git credentials (If you have credentials stored, this command you set them as your git configurations)',
   alias: 'config',
-  run: async (toolbox: GluegunToolbox) => {
+  run: async (toolbox: Toolbox) => {
     const { parameters, system, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
 

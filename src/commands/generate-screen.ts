@@ -1,5 +1,5 @@
-import { GluegunToolbox } from 'gluegun'
 import { Command } from 'gluegun/build/types/domain/command'
+import { Toolbox } from '../@types/gluegun'
 import { isHelpOption } from '../shared/isHelpOption'
 import { timerString } from '../shared/timerString'
 
@@ -7,7 +7,7 @@ module.exports = {
   name: 'generate-screen',
   description: 'Create a new file in src/screens',
   alias: 'gen-screen',
-  run: async (toolbox: GluegunToolbox) => {
+  run: async (toolbox: Toolbox) => {
     const { parameters, createFile, createHelp, system, print } = toolbox
     const timeElapsedInMs = system.startTimer()
 
