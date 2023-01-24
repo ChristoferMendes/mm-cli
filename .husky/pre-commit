@@ -1,5 +1,17 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+email=`git config user.email`
+
+RED="\e[31m"
+ENDCOLOR="\e[0m"
+
+if [ $email != "christoferluizdsm@gmail.com" ];
+then
+  echo "${RED}Error! ${ENDCOLOR}Wrong git email"
+  exit 1
+fi
+
 npx jest
 git status
+
