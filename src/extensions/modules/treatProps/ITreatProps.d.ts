@@ -2,8 +2,7 @@ import { Toolbox } from 'gluegun/build/types/domain/toolbox'
 
 export interface ITreatProps {
   name: string
-  toolbox: Toolbox
-  typescriptIsPresent: boolean
+  extension: 'ts' | 'js'
 }
 
 export interface TreatPropsReturn {

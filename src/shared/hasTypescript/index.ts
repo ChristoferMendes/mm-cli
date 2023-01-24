@@ -1,9 +1,7 @@
+import { filesystem } from 'gluegun'
 import { IPackageJson } from '../PackageJsonInterface'
-import { IHasTypescript } from './IHasTypescript'
 
-export async function hasTypescript({
-  filesystem,
-}: IHasTypescript): Promise<boolean> {
+export async function hasTypescript(): Promise<boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

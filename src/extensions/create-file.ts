@@ -1,36 +1,29 @@
 import { GluegunToolbox } from 'gluegun'
 import { hasTypescript } from '../shared/hasTypescript'
+import { handleGeneratedFileOutput } from './modules/handleGeneratedFileOutput'
 import { treatNotIndexOption } from './modules/treatNotIndexOption'
 import { treatProps } from './modules/treatProps'
 import { treatTarget } from './modules/treatTarget'
 import { treatTemplateFile } from './modules/treatTemplateFile'
 
 module.exports = (toolbox: GluegunToolbox) => {
-  const {
-    template,
-    print: { success },
-    parameters,
-    filesystem,
-  } = toolbox
+  const { template } = toolbox
 
   async function createFile(folder: `src/${string}`, name: string | undefined) {
-    const { index: indexFlag } = parameters.options
-    const notIndex = await treatNotIndexOption({ toolbox })
+    const notIndexIsPresent = await treatNotIndexOption({ toolbox })
 
-    const notIndexIsPresent = notIndex && !indexFlag
-
-    const typescriptIsPresent = await hasTypescript({ filesystem })
+    const typescriptIsPresent = await hasTypescript()
+    const extension = typescriptIsPresent ? 'ts' : 'js'
 
     const targets = await treatTarget({
-      toolbox,
       folder,
       name,
       notIndexIsPresent,
-      typescriptIsPresent,
+      extension,
     })
 
-    const templateFile = await treatTemplateFile({ toolbox, targets })
-    const props = await treatProps({ name, toolbox, typescriptIsPresent })
+    const templateFile = await treatTemplateFile({ targets })
+    const props = await treatProps({ name, extension })
 
     targets.filter(Boolean).forEach((target, index) => {
       template.generate({
@@ -40,11 +33,9 @@ module.exports = (toolbox: GluegunToolbox) => {
       })
     })
 
-    if (notIndexIsPresent) {
-      return success(`Generated file at ${folder}/${name}/${name}.tsx!`)
-    }
+    const outPutVariables = { folder, name, extension, notIndexIsPresent }
 
-    return success(`Generated file at ${folder}/${name}/index.tsx!`)
+    return handleGeneratedFileOutput(outPutVariables)
   }
 
   toolbox.createFile = createFile

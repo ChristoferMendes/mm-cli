@@ -1,9 +1,7 @@
+import { filesystem } from 'gluegun'
 import { IPackageJson } from '../PackageJsonInterface'
-import type { IHasReactNative } from './IHasReactNative'
 
-export default async function hasReactNative({
-  filesystem,
-}: IHasReactNative): Promise<void | boolean> {
+export default async function hasReactNative(): Promise<void | boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

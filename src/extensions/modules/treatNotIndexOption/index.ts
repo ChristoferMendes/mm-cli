@@ -10,7 +10,7 @@ export async function treatNotIndexOption({
     parameters: { options },
   } = toolbox
 
-  const { notI, notIndex } = options
+  const { notI, notIndex, index: indexFlag } = options
 
   const defaultConfigStored = await prisma.defaultConfig.findFirst()
 
@@ -18,5 +18,5 @@ export async function treatNotIndexOption({
 
   const notIndexIsPresent = notI || notIndex || notIndexConfig
 
-  return notIndexIsPresent
+  return notIndexIsPresent && !indexFlag
 }

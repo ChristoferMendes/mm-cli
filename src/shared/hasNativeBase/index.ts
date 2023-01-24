@@ -1,9 +1,7 @@
+import { filesystem } from 'gluegun'
 import { IPackageJson } from '../PackageJsonInterface'
-import { IHasNativeBase } from './hasNativeBase'
 
-export async function hasNativeBase({
-  filesystem,
-}: IHasNativeBase): Promise<boolean> {
+export async function hasNativeBase(): Promise<boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

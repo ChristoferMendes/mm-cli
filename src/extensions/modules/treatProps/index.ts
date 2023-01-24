@@ -3,15 +3,9 @@ import { ITreatProps, TreatPropsReturn } from './ITreatProps'
 
 export async function treatProps({
   name,
-  toolbox,
-  typescriptIsPresent,
+  extension,
 }: ITreatProps): Promise<TreatPropsReturn> {
-  const extension = typescriptIsPresent ? 'ts' : 'js'
-  const { filesystem } = toolbox
-
-  const nativeBaseIsPresent = await hasNativeBase({
-    filesystem,
-  })
+  const nativeBaseIsPresent = await hasNativeBase()
 
   const native = nativeBaseIsPresent ? 'native-base' : 'react-native'
 

@@ -1,9 +1,7 @@
+import { filesystem } from 'gluegun'
 import { IPackageJson } from '../PackageJsonInterface'
-import { IHasStyledComponents } from './haveStyledComponents'
 
-export async function hasStyledComponents({
-  filesystem,
-}: IHasStyledComponents): Promise<boolean> {
+export async function hasStyledComponents(): Promise<boolean> {
   const packageJson: undefined | IPackageJson = await filesystem.read(
     'package.json',
     'json'

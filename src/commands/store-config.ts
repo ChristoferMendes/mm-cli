@@ -5,9 +5,9 @@ import { isHelpOption } from '../shared/isHelpOption'
 import { IGenerateFileOptions } from '../shared/Options'
 
 module.exports = {
-  name: 'default-configs',
-  alias: 'configs',
-  description: 'Store default configs',
+  name: 'store-configs',
+  description:
+    'Store default configs. Currently just the notIndex option when creating a file',
   run: async (toolbox: Toolbox) => {
     const { parameters, print, createHelp, prompt } = toolbox
     const helper = () => {

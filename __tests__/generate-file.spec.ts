@@ -19,9 +19,7 @@ describe('Generate file tests', () => {
   describe('Generate page file', () => {
     it('should create a file in src/pages/HomeTest', async () => {
       const output = await cli('generate-page HomeTest --index')
-      expect(output).toContain(
-        'Generated file at src/pages/HomeTest/index.tsx!'
-      )
+      expect(output.toString()).toContain('GENERATED')
       const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
       expect(fileCreated).toContain('export function HomeTest()')
     })
@@ -31,9 +29,7 @@ describe('Generate file tests', () => {
     it('should create a file in src/components/HomeTest', async () => {
       const output = await cli('generate-component HomeTest --index')
 
-      expect(output).toContain(
-        'Generated file at src/components/HomeTest/index.tsx!'
-      )
+      expect(output).toContain('GENERATED')
 
       const fileCreated = filesystem.read(`${componentFilePath}/index.tsx`)
       expect(fileCreated).toContain('export function HomeTest()')
@@ -44,9 +40,7 @@ describe('Generate file tests', () => {
     it('should create a file in src/screens/HomeTest', async () => {
       const output = await cli('generate-screen HomeTest --index')
 
-      expect(output).toContain(
-        'Generated file at src/screens/HomeTest/index.tsx!'
-      )
+      expect(output).toContain('GENERATED')
 
       const fileCreated = filesystem.read(`${screenFilePath}/index.tsx`)
       expect(fileCreated).toContain('export function HomeTest()')
@@ -65,9 +59,7 @@ describe('Generate file tests', () => {
       await system.exec('rm -rf package.json')
       await system.exec('mv packageMain.json package.json')
 
-      expect(output).toContain(
-        'Generated file at src/pages/HomeTest/index.tsx!'
-      )
+      expect(output).toContain('GENERATED')
 
       const fileCreated = filesystem.read(`${pageFilePath}/index.tsx`)
       expect(fileCreated).toContain('export function HomeTest()')
@@ -86,9 +78,7 @@ describe('Generate file tests', () => {
       await system.exec('rm -rf package.json')
       await system.exec('mv packageMain.json package.json')
 
-      expect(output).toContain(
-        'Generated file at src/pages/HomeTest/index.tsx!'
-      )
+      expect(output).toContain('GENERATED')
 
       const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
       expect(styleFileCreated).toContain(
@@ -111,9 +101,7 @@ describe('Generate file tests', () => {
       await system.exec('rm -rf package.json')
       await system.exec('mv packageMain.json package.json')
 
-      expect(output).toContain(
-        'Generated file at src/pages/HomeTest/index.tsx!'
-      )
+      expect(output).toContain('GENERATED')
 
       const styleFileCreated = filesystem.read(`${pageFilePath}/styles.ts`)
       expect(styleFileCreated).toContain(
@@ -134,9 +122,7 @@ describe('Generate file tests', () => {
       )
       const output = await cli('gen-screen HomeTest --index')
 
-      expect(output).toContain(
-        'Generated file at src/screens/HomeTest/index.tsx'
-      )
+      expect(output).toContain('GENERATED')
 
       const fileCreated = filesystem.read(`${screenFilePath}/index.tsx`)
 

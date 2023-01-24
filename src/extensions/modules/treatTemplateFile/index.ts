@@ -3,10 +3,8 @@ import { hasStyledComponents } from '../../../shared/hasStyledComponents'
 import { ITreatTemplateFile } from './ITreatTemplateFile'
 
 export async function treatTemplateFile({
-  toolbox,
   targets,
 }: ITreatTemplateFile): Promise<string[]> {
-  const { filesystem } = toolbox
   const reactKey = 'react'
   const reactNativeKey = 'reactNative'
   const reactWithSyledComponentsKey = 'reactWithStyled'
@@ -31,8 +29,8 @@ export async function treatTemplateFile({
     ],
   }
 
-  const reactNativeIsPresent = await hasReactNative({ filesystem })
-  const styledComponentIsPresent = await hasStyledComponents({ filesystem })
+  const reactNativeIsPresent = await hasReactNative()
+  const styledComponentIsPresent = await hasStyledComponents()
 
   if (reactNativeIsPresent && styledComponentIsPresent) {
     return templateFiles[reactNativeWithStyledComponentsKey]

@@ -2,18 +2,14 @@ import { hasStyledComponents } from '../../../shared/hasStyledComponents'
 import { ITreatTarget } from './ITreatTarget'
 
 export async function treatTarget({
-  toolbox,
   folder,
   name,
   notIndexIsPresent,
-  typescriptIsPresent,
+  extension,
 }: ITreatTarget): Promise<string[]> {
-  const { filesystem } = toolbox
-
   const defaultTargetsKey = 'default'
   const notIndexTargetsKey = 'notIndex'
 
-  const extension = typescriptIsPresent ? 'ts' : 'js'
   const reactExtension = `${extension}x`
   const defaultPath = `${folder}/${name}`
 
@@ -21,7 +17,7 @@ export async function treatTarget({
   const notIndexTargetFolder = `${defaultPath}/${name}.${reactExtension}`
   const notIndexExporterTargetFolder = defaultTargetFolder
 
-  const styledComponentIsPresent = await hasStyledComponents({ filesystem })
+  const styledComponentIsPresent = await hasStyledComponents()
   const styledTargetFolder =
     styledComponentIsPresent && `${defaultPath}/styles.${extension}`
 
