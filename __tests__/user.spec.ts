@@ -32,7 +32,7 @@ describe('User tests.', () => {
 
   describe('Command check-configs', () => {
     it('should list the user configs', async () => {
-      await cli('configs --not-i=true')
+      await cli('store-configs --not-i=true')
       const output = await cli('check-configs')
       expect(output).toContain('notIndex: true')
     })

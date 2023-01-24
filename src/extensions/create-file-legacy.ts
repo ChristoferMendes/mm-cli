@@ -8,7 +8,6 @@ import { IGenerateFileOptions } from '../shared/Options'
 
 module.exports = (toolbox: GluegunToolbox) => {
   const {
-    filesystem,
     print: { success, error },
     template,
     parameters,
@@ -35,7 +34,7 @@ module.exports = (toolbox: GluegunToolbox) => {
       ? notIndexFolder
       : indexFolder
 
-    const isStyledComponent = await hasStyledComponents({ filesystem })
+    const isStyledComponent = await hasStyledComponents()
 
     if (isStyledComponent) {
       const reactNativeStyledComponentsTemplates = [
@@ -48,7 +47,7 @@ module.exports = (toolbox: GluegunToolbox) => {
         'styled.tsx.ejs',
       ]
 
-      const styledTemplateFiles = (await hasReactNative({ filesystem }))
+      const styledTemplateFiles = (await hasReactNative())
         ? reactNativeStyledComponentsTemplates
         : reactStyledComponentsTemplates
 
@@ -84,11 +83,11 @@ module.exports = (toolbox: GluegunToolbox) => {
       })
     }
 
-    const templateFile = (await hasReactNative({ filesystem }))
+    const templateFile = (await hasReactNative())
       ? 'component-rn.tsx.ejs'
       : 'component.tsx.ejs'
 
-    const isNativeBase = await hasNativeBase({ filesystem })
+    const isNativeBase = await hasNativeBase()
     const nativeImport = isNativeBase ? 'native-base' : 'react-native'
 
     await template.generate({
