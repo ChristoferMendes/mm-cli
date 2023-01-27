@@ -11,6 +11,7 @@ export async function treatTemplateFile({
   const reactNativeWithStyledComponentsKey = 'reactNativeWithSyledComponentes'
 
   const [, notIndexTarget] = targets
+  console.log(targets)
 
   const notIndexExporterTemplate = notIndexTarget && 'index-exporter.ejs'
 
@@ -19,13 +20,13 @@ export async function treatTemplateFile({
     [reactNativeKey]: ['react-rn.ejs', notIndexExporterTemplate],
     [reactWithSyledComponentsKey]: [
       'react-styled.ejs',
-      'styled.ejs',
       notIndexExporterTemplate,
+      'styled.ejs',
     ],
     [reactNativeWithStyledComponentsKey]: [
       'react-rn-styled.ejs',
-      'styled-rn.ejs',
       notIndexExporterTemplate,
+      'styled-rn.ejs',
     ],
   }
 

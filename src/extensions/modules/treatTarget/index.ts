@@ -21,8 +21,14 @@ export async function treatTarget({
   const styledTargetFolder =
     styledComponentIsPresent && `${defaultPath}/styles.${extension}`
 
+  const notIndexDefault = ''
+
   const target = {
-    [defaultTargetsKey]: [defaultTargetFolder, styledTargetFolder],
+    [defaultTargetsKey]: [
+      defaultTargetFolder,
+      notIndexDefault,
+      styledTargetFolder,
+    ],
     [notIndexTargetsKey]: [
       notIndexTargetFolder,
       notIndexExporterTargetFolder,
