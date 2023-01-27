@@ -13,9 +13,4 @@ export async function moveMockedPackageJson({
 
   await system.exec('mv package.json packageMain.json')
   await system.exec(`cp ${path} ./package.json`)
-
-  // const output = await cli('gen-page HomeTest --index')
-
-  // await system.exec('rm -rf package.json')
-  // await system.exec('mv packageMain.json package.json')
 }

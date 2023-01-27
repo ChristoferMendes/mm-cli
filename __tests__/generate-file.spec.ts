@@ -11,9 +11,13 @@ const pageFilePath = filesystem.path('src/pages/HomeTest/')
 const componentFilePath = filesystem.path('src/components/HomeTest/')
 const screenFilePath = filesystem.path('src/screens/HomeTest/')
 
+const notIndexPageFile = filesystem.path('src/pages/HomeTestNotIndex/')
+// const fullNotIndexPathFile =
+//   filesystem.read(`${notIndexPageFile}/HomeTestNotIndex.tsx`) ?? ''
+
 afterEach(() => {
-  ;[pageFilePath, componentFilePath, screenFilePath].forEach((item) =>
-    filesystem.remove(item)
+  ;[pageFilePath, componentFilePath, screenFilePath, notIndexPageFile].forEach(
+    (item) => filesystem.remove(item)
   )
 })
 
@@ -67,15 +71,10 @@ describe('Generate file tests', () => {
 
   describe('Generate styled-component file', () => {
     it('should create a file with styled-component setup', async () => {
-      await system.exec('mv package.json packageMain.json')
-      await system.exec(
-        'cp ./__tests__/mocks/package.json/mock-styled-components.json ./package.json'
-      )
       await moveMockedPackageJson({ mockedJson: 'mock-styled-components.json' })
       const output = await cli('gen-page HomeTest --index')
 
-      await system.exec('rm -rf package.json')
-      await system.exec('mv packageMain.json package.json')
+      await removeMockedPackageJson()
 
       expect(output).toContain('GENERATED')
 
@@ -91,14 +90,12 @@ describe('Generate file tests', () => {
 
   describe('Generate react-native with styled-component file', () => {
     it('should create a react-native file with styled-component', async () => {
-      await system.exec('mv package.json packageMain.json')
-      await system.exec(
-        'cp ./__tests__/mocks/package.json/mock-rn-and-styled-components.json ./package.json'
-      )
+      await moveMockedPackageJson({
+        mockedJson: 'mock-rn-and-styled-components.json',
+      })
 
       const output = await cli('gen-page HomeTest --index')
-      await system.exec('rm -rf package.json')
-      await system.exec('mv packageMain.json package.json')
+      await removeMockedPackageJson()
 
       expect(output).toContain('GENERATED')
 
@@ -115,10 +112,7 @@ describe('Generate file tests', () => {
 
   describe('Generate native-base file', () => {
     it('should create a file with native-base setup', async () => {
-      await system.exec('mv package.json packageMain.json')
-      await system.exec(
-        'cp ./__tests__/mocks/package.json/mock-native-base.json ./package.json'
-      )
+      await moveMockedPackageJson({ mockedJson: 'mock-native-base.json' })
       const output = await cli('gen-screen HomeTest --index')
 
       expect(output).toContain('GENERATED')
@@ -128,8 +122,87 @@ describe('Generate file tests', () => {
       expect(fileCreated).toContain("import { View, Text } from 'native-base';")
       expect(fileCreated).toContain('<View>')
 
-      await system.exec('rm -rf package.json')
-      await system.exec('mv packageMain.json package.json')
+      await removeMockedPackageJson()
     })
-  })
+  }),
+    describe('Generating files with --not-index', () => {
+      describe('Generate page', () => {
+        it('should create a file in src/page/HomeTest/HomeTestNotIndex.tsx', async () => {
+          const output = await cli('gen-page HomeTestNotIndex --not-index')
+          expect(output).toContain('GENERATED')
+
+          const fileCreated = filesystem.read(
+            `${notIndexPageFile}/HomeTestNotIndex.tsx`
+          )
+          const indexExportedFileCreated = filesystem.read(
+            `${notIndexPageFile}/index.tsx`
+          )
+
+          expect(indexExportedFileCreated).toContain(
+            "import { HomeTestNotIndex } from './HomeTestNotIndex'"
+          )
+          expect(indexExportedFileCreated).not.toContain(
+            "import { Container } from 'styled-components'"
+          )
+          expect(indexExportedFileCreated).not.toContain(
+            'export function HomeTestNotIndex()'
+          )
+
+          expect(fileCreated).toContain('export function HomeTestNotIndex()')
+        })
+      })
+
+      describe('Generate styled-components file', () => {
+        it('should create a file with styled-component setup', async () => {
+          await moveMockedPackageJson({
+            mockedJson: 'mock-styled-components.json',
+          })
+          const output = await cli('gen-page HomeTestNotIndex --not-index')
+
+          expect(output).toContain('GENERATED')
+
+          const styledComponentsFileCreated = filesystem.read(
+            `${notIndexPageFile}/styles.ts`
+          )
+
+          expect(styledComponentsFileCreated).toContain(
+            "import { Container } from 'styled-components'"
+          )
+          expect(styledComponentsFileCreated).not.toContain('function')
+
+          await removeMockedPackageJson()
+        })
+      })
+
+      describe('Generate react-native file', () => {
+        it('should create a file with react-native setup', async () => {
+          await moveMockedPackageJson({
+            mockedJson: 'mock-rn.json',
+          })
+
+          const output = await cli('gen-page HomeTestNotIndex --not-index')
+          expect(output).not.toContain('Name must be specified')
+          expect(output).toContain('GENERATED')
+
+          await removeMockedPackageJson()
+        })
+      })
+
+      // describe('Generate react native with styled components files', () => {
+      //   it('should create a file with react-native with styled components setup', async () => {
+      //     await moveMockedPackageJson({
+      //       mockedJson: 'mock-rn-and-styled-components.json',
+      //     })
+
+      //     const output = await cli('gen-page HomeTestNotIndex --not-index')
+      //     expect(output).toContain('GENERATED')
+
+      //     // const fileCreated = filesystem.read(fullNotIndexPathFile)
+      //     // expect(fileCreated).not.toBe(undefined)
+      //     // console.log(fileCreated)
+
+      //     await removeMockedPackageJson()
+      //   })
+      // })
+    })
 })
