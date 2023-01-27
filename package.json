@@ -64,7 +64,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["./__tests__/shared"]
   },
   "prettier": {
     "semi": false,

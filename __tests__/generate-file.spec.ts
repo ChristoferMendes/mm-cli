@@ -1,4 +1,6 @@
 import { system, filesystem } from 'gluegun'
+import { moveMockedPackageJson } from './shared/moveMockPackageJson'
+import { removeMockedPackageJson } from './shared/removeMockPackageJson'
 
 const src = filesystem.path(__dirname, '..')
 
@@ -49,15 +51,11 @@ describe('Generate file tests', () => {
 
   describe('Generate react-native file', () => {
     it('should create a file with react native setup', async () => {
-      await system.exec('mv package.json packageMain.json')
-      await system.exec(
-        'cp ./__tests__/mocks/package.json/mock-rn.json ./package.json'
-      )
+      await moveMockedPackageJson({ mockedJson: 'mock-rn.json' })
 
       const output = await cli('gen-page HomeTest --index')
 
-      await system.exec('rm -rf package.json')
-      await system.exec('mv packageMain.json package.json')
+      await removeMockedPackageJson()
 
       expect(output).toContain('GENERATED')
 
@@ -73,6 +71,7 @@ describe('Generate file tests', () => {
       await system.exec(
         'cp ./__tests__/mocks/package.json/mock-styled-components.json ./package.json'
       )
+      await moveMockedPackageJson({ mockedJson: 'mock-styled-components.json' })
       const output = await cli('gen-page HomeTest --index')
 
       await system.exec('rm -rf package.json')
