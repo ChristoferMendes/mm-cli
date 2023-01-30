@@ -14,9 +14,8 @@ fi
 
 GREEN="\e[32m"
 NEW_LINE="\n"
-SUCCES_STRING="${NEW_LINE}${GREEN}The application works fine the current changes!${RESET_COLOR}"
+SUCCES_STRING="${NEW_LINE}${GREEN}The application works fine the current changes! You can now push them${RESET_COLOR}"
 ERROR_STRING="${NEW_LINE}${RED}The application breaks with the current changes! Please, review your code${RESET_COLOR}"
 
 (npx jest && echo "${SUCCES_STRING}") || echo "${ERROR_STRING}"
-git status
 
