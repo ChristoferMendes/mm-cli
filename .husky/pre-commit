@@ -1,17 +1,22 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-email=`git config user.email`
+email=$(git config user.email)
 
 RED="\e[31m"
-ENDCOLOR="\e[0m"
+RESET_COLOR="\e[0m"
 
-if [ $email != "christoferluizdsm@gmail.com" ];
+if [ "$email" != "christoferluizdsm@gmail.com" ];
 then
-  echo "${RED}Error! ${ENDCOLOR}Wrong git email"
+  echo "${RED}Error! ${RESET_COLOR}Wrong git email"
   exit 1
 fi
 
-npx jest
+GREEN="\e[32m"
+NEW_LINE="\n"
+SUCCES_STRING="${NEW_LINE}${GREEN}The application works fine the current changes!${RESET_COLOR}"
+ERROR_STRING="${NEW_LINE}${RED}The application breaks with the current changes! Please, review your code${RESET_COLOR}"
+
+(npx jest && echo "${SUCCES_STRING}") || echo "${ERROR_STRING}"
 git status
 
