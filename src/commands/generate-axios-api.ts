@@ -1,6 +1,5 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { handleGeneratedFileOutput } from '../extensions/modules/handleGeneratedFileOutput'
 import { timerString } from '../shared/timerString'
 
 module.exports = {
