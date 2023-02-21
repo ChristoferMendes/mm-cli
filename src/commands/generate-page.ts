@@ -39,10 +39,13 @@ module.exports = {
       return
     }
 
-    const name = parameters.first
-    const nameToUpperCase = toolbox.strings.upperFirst(name)
+    const files = parameters.array
 
-    await createFile('src/pages', nameToUpperCase)
+    for (const file of files) {
+      const nameToUpperCase = toolbox.strings.upperFirst(file)
+      await createFile('src/pages', nameToUpperCase)
+    }
+
     print.newline()
     print.info('Done in ' + timerString(timeElapsedInMs))
   },
