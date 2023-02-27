@@ -5,4 +5,5 @@ export interface IPackageJson {
   devDependencies: {
     [key: string]: string
   }
+  name: string
 }
