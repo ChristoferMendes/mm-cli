@@ -1,6 +1,6 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { isHelpOption } from '../shared/isHelpOption'
+import { hasHelpOtion } from '../shared/isHelpOption'
 import { timerString } from '../shared/timerString'
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     const { parameters, createFile, createHelp, system, print } = toolbox
     const timeElapsedInMs = system.startTimer()
 
-    const haveHelp = isHelpOption(parameters.options)
+    const haveHelp = hasHelpOtion(parameters.options)
 
     if (haveHelp) {
       createHelp({

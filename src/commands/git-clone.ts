@@ -2,7 +2,7 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
-import { isHelpOption } from '../shared/isHelpOption'
+import { hasHelpOtion } from '../shared/isHelpOption'
 import { timerString } from '../shared/timerString'
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
     const { system, parameters, print, createHelp } = toolbox
     const timeElapsedInMs = system.startTimer()
 
-    const haveHelp = isHelpOption(parameters.options)
+    const haveHelp = hasHelpOtion(parameters.options)
     const repository = parameters.first
     const { name } = parameters.options
 

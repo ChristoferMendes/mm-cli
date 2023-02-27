@@ -1,7 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
-import { isHelpOption } from '../shared/isHelpOption'
+import { hasHelpOtion } from '../shared/isHelpOption'
 import { IGenerateFileOptions } from '../shared/Options'
 
 module.exports = {
@@ -56,7 +56,7 @@ module.exports = {
       )
     }
 
-    const haveHelp = isHelpOption(parameters.options)
+    const haveHelp = hasHelpOtion(parameters.options)
 
     if (haveHelp) {
       return helper()
