@@ -1,3 +1,4 @@
+import { spinner, outro } from '@clack/prompts'
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { Toolbox } from '../@types/gluegun'
@@ -12,13 +13,17 @@ module.exports = {
     'Clone a repository from your git (Using your credentials stored or your local git configurations)',
   run: async (toolbox: Toolbox) => {
     const { system, parameters, print, createHelp } = toolbox
+    const loading = spinner()
     const timeElapsedInMs = system.startTimer()
+
+    loading.start('Clonning repository')
 
     const haveHelp = hasHelpOtion(parameters.options)
     const repository = parameters.first
     const { name } = parameters.options
 
     if (haveHelp || !repository) {
+      loading.stop()
       return createHelp({
         commandName: 'git-clone',
         description: 'Pass the repository name you want to clone',
@@ -63,8 +68,8 @@ module.exports = {
           name: repository,
         },
       })
-      print.newline()
-      print.info('Done in ' + timerString(timeElapsedInMs))
+      loading.stop(`Cloned ${repository.trim()} repository`)
+      outro('Done in ' + timerString(timeElapsedInMs))
     } catch (error) {
       const glueGunError = error as GluegunError
       print.info(glueGunError.message)

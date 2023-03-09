@@ -36,6 +36,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@clack/prompts": "^0.6.3",
     "@prisma/client": "4.7.1",
     "figlet": "^1.5.2",
     "gluegun": "latest"
@@ -65,7 +66,9 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["./__tests__/shared"]
+    "testPathIgnorePatterns": [
+      "./__tests__/shared"
+    ]
   },
   "prettier": {
     "semi": false,
