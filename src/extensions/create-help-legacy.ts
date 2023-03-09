@@ -17,7 +17,7 @@ module.exports = (toolbox: Toolbox) => {
     commandName,
   }: IcreateHelpLegacy) => {
     print.info(`Flags for ${commandName}`)
-    const options = []
+    const options: Array<string[]> = []
     for (let i = 0; i < flags.length; i++) {
       options[i] = [flags[i], aliases[i], descriptions[i]]
     }

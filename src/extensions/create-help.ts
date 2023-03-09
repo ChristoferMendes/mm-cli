@@ -37,9 +37,15 @@ module.exports = (toolbox: Toolbox) => {
         item.description,
       ])
 
-      print.table([['Flag', 'Alias', 'Description'], ...optionsSerialized], {
-        format: 'lean',
-      })
+      print.table(
+        [
+          ['Flag', 'Alias', 'Description'],
+          ...(optionsSerialized.filter(Boolean) as string[][]),
+        ],
+        {
+          format: 'lean',
+        }
+      )
     }
   }
 

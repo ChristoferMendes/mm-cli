@@ -7,5 +7,5 @@ export const verifyProjectName = async (): Promise<boolean> => {
     'json'
   )
 
-  if (packageJSON) return packageJSON.name === 'mm-tec-cli'
+  return packageJSON?.name === 'mm-tec-cli'
 }

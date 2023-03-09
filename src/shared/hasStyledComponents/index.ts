@@ -7,5 +7,5 @@ export async function hasStyledComponents(): Promise<boolean> {
     'json'
   )
 
-  if (packageJson) return !!packageJson.dependencies['styled-components']
+  return !!packageJson?.dependencies['styled-components']
 }

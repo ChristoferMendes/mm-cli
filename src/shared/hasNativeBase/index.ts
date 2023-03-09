@@ -7,5 +7,5 @@ export async function hasNativeBase(): Promise<boolean> {
     'json'
   )
 
-  if (packageJson) return !!packageJson.dependencies['native-base']
+  return !!packageJson?.dependencies['native-base']
 }

@@ -7,5 +7,5 @@ export async function hasTypescript(): Promise<boolean> {
     'json'
   )
 
-  if (packageJson) return !!packageJson.devDependencies['typescript']
+  return !!packageJson?.devDependencies['typescript']
 }
