@@ -31,7 +31,6 @@ module.exports = {
         options: [
           {
             flag: '--name',
-            alias: null,
             description:
               'Optionally, you can pass the name of the repository owner with it ($ mm clone react --name Facebook)',
           },
