@@ -33,7 +33,6 @@ describe('Git commands', () => {
 
   describe('Command git-clone', () => {
     it('should clone a repository', async () => {
-      jest.setTimeout(20000)
       const output = await cli(
         `git-clone ${availableRepository} --name ${name}`
       )
