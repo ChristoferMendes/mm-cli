@@ -43,13 +43,11 @@ module.exports = {
 
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
-    const [emailFromCli] = parameters.array.filter(
-      (item) => item.match(emailRegex) ?? item
-    )
+    const [emailFromCli] =
+      parameters.array?.filter((item) => item.match(emailRegex) ?? item) ?? []
 
-    const [nameFromCli] = parameters.array.filter(
-      (item) => !item.match(emailRegex)
-    )
+    const [nameFromCli] =
+      parameters.array?.filter((item) => !item.match(emailRegex)) ?? []
 
     const user = await prisma.user.findFirst()
 

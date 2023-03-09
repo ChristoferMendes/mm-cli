@@ -26,8 +26,10 @@ module.exports = {
 
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
-    const [name] = parameters.array.filter((item) => !item.match(emailRegex))
-    const [email] = parameters.array.filter((item) => item.match(emailRegex))
+    const [name] =
+      parameters.array?.filter((item) => !item.match(emailRegex)) ?? []
+    const [email] =
+      parameters.array?.filter((item) => item.match(emailRegex)) ?? []
 
     if (!name || !email) {
       print.error('Name and email must be specified to create')

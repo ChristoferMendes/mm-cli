@@ -1,3 +1,3 @@
 export interface ITreatTemplateFile {
-  targets: string[]
+  targets: (string | undefined)[]
 }

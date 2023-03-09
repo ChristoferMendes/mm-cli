@@ -28,7 +28,7 @@ module.exports = (toolbox: Toolbox) => {
     targets.filter(Boolean).forEach((target, index) => {
       template.generate({
         target,
-        template: templateFile.filter(Boolean)[index],
+        template: templateFile.filter(Boolean)[index] as string,
         props,
       })
     })

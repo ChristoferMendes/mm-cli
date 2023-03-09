@@ -23,7 +23,6 @@ module.exports = {
           },
           {
             flag: '--index',
-            alias: null,
             description: 'Generate a file with a index as a main (default)',
           },
         ],
@@ -40,6 +39,13 @@ module.exports = {
     }
 
     const files = parameters.array
+
+    if (!files) {
+      print.error('You must specify a file')
+      print.newline()
+      return print.info('Done in ' + timerString(timeElapsedInMs))
+    }
+
     for (const file of files) {
       const nameToUpperCase = toolbox.strings.upperFirst(file)
       await createFile('src/screens', nameToUpperCase)

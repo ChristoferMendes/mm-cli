@@ -14,7 +14,7 @@ async function run(argv) {
     .version() // provides default for version, v, --version, -v
     .defaultCommand((toolbox: GluegunToolbox) => {
       const { print } = toolbox
-      const onError = (err: Error, data: string) => {
+      const onError = (err: Error | null, data: string | undefined) => {
         if (err) {
           print.error('Something went wrong...')
           console.dir(err)

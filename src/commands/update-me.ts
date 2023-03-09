@@ -12,8 +12,10 @@ module.exports = {
 
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
 
-    const [name] = parameters.array.filter((item) => !item.match(emailRegex))
-    const [email] = parameters.array.filter((item) => item.match(emailRegex))
+    const [name] =
+      parameters.array?.filter((item) => !item.match(emailRegex)) ?? []
+    const [email] =
+      parameters.array?.filter((item) => item.match(emailRegex)) ?? []
 
     if (!name && !email) {
       print.error('At least name or email must be specified')
@@ -39,7 +41,7 @@ module.exports = {
 
     print.success('Credentials updated')
     const defineNameChanged = name
-      ? print.colors.cyan(newUser.name)
+      ? print.colors.cyan(newUser.name as string)
       : newUser.name
 
     const defineEmailChange = email

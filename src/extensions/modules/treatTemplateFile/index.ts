@@ -4,7 +4,7 @@ import { ITreatTemplateFile } from './ITreatTemplateFile'
 
 export async function treatTemplateFile({
   targets,
-}: ITreatTemplateFile): Promise<string[]> {
+}: ITreatTemplateFile): Promise<(string | undefined)[]> {
   const reactKey = 'react'
   const reactNativeKey = 'reactNative'
   const reactWithSyledComponentsKey = 'reactWithStyled'

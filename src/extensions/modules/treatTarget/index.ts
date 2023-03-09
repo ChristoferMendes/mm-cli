@@ -6,7 +6,7 @@ export async function treatTarget({
   name,
   notIndexIsPresent,
   extension,
-}: ITreatTarget): Promise<string[]> {
+}: ITreatTarget): Promise<(string | undefined)[]> {
   const defaultTargetsKey = 'default'
   const notIndexTargetsKey = 'notIndex'
 
@@ -18,8 +18,9 @@ export async function treatTarget({
   const notIndexExporterTargetFolder = defaultTargetFolder
 
   const styledComponentIsPresent = await hasStyledComponents()
-  const styledTargetFolder =
-    styledComponentIsPresent && `${defaultPath}/styles.${extension}`
+  const styledTargetFolder = styledComponentIsPresent
+    ? `${defaultPath}/styles.${extension}`
+    : undefined
 
   const notIndexDefault = ''
 
