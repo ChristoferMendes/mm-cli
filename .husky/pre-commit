@@ -1,17 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-email=$(git config user.email)
-
 RED="\e[31m"
 RESET_COLOR="\e[0m"
-
-if [ "$email" != "christoferluizdsm@gmail.com" ];
-then
-  echo "${RED}ERROR! ${RESET_COLOR}Wrong git email"
-  exit 1
-fi
-
 GREEN="\e[32m"
 NEW_LINE="\n"
 SUCCES_STRING="${NEW_LINE}${GREEN}The application works fine with the current changes! You can now push them${RESET_COLOR}"
