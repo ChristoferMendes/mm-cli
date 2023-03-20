@@ -7,6 +7,13 @@
   ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 </div>
 
+<div align="center">
+
+![MM CLI](https://user-images.githubusercontent.com/107426464/225413401-9cfd803a-f391-4663-b54f-0dcce6fe80d2.gif)
+
+</div>
+
+
 ## Install
 
 
