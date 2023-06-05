@@ -1,14 +1,14 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { timerString } from '../shared/classes/Timer'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'generate-axios-api',
   alias: 'gen-axios-api',
   description: 'generate a base service to use axios',
   run: async (toolbox: Toolbox) => {
-    const { template, parameters, print, system } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    const { template, parameters, print } = toolbox
+    timer.start()
 
     const port = parameters.first
 
@@ -27,7 +27,6 @@ module.exports = {
 
     print.info(`${generatedString} ${path}`)
 
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command

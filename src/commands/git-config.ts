@@ -1,5 +1,4 @@
 import { Toolbox } from '../@types/gluegun'
-import { prisma } from '../prisma'
 import { userConfig } from '../shared/classes/UserConfig'
 import { hasHelpOtion } from '../shared/isHelpOption'
 import { timer } from '../shared/classes/Timer'

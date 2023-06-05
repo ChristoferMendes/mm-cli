@@ -7,9 +7,16 @@ import { treatTarget } from './modules/treatTarget'
 import { treatTemplateFile } from './modules/treatTemplateFile'
 
 module.exports = (toolbox: Toolbox) => {
-  const { template } = toolbox
+  const { template, print } = toolbox
 
   async function createFile(folder: `src/${string}`, name: string | undefined) {
+    const special_characters = /[^\w\s]/
+    const nameContainSpecialCharacter = special_characters.test(name ?? '')
+
+    if (nameContainSpecialCharacter) {
+      return print.error('File name must not contain special characters')
+    }
+
     const notIndexIsPresent = await treatNotIndexOption({ toolbox })
 
     const typescriptIsPresent = await hasTypescript()

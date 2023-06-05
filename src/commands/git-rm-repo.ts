@@ -2,7 +2,7 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/classes/Timer'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'git-rm-repo',
@@ -10,7 +10,7 @@ module.exports = {
   description: 'Delete the last repository cloned',
   run: async (toolbox: Toolbox) => {
     const { print, system, parameters, createHelp } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    timer.start()
 
     const haveHelp = hasHelpOtion(parameters.options)
 
@@ -26,14 +26,12 @@ module.exports = {
 
     if (!lastRepo) {
       print.error('You do not cloned any repository')
-      print.newline()
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     if (!lastRepo.name) {
       print.error('Your last repository cloned was already deleted')
-      print.newline()
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     await system.run(`rm -rf ${lastRepo.name}`)
@@ -45,7 +43,6 @@ module.exports = {
       },
     })
     print.success(`Repository ${lastRepo.name} deleted!`)
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command

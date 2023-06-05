@@ -1,7 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { timerString } from '../shared/classes/Timer'
 import { verifyProjectName } from '../shared/verifyProjectName'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'generate-command',
@@ -9,11 +9,15 @@ module.exports = {
   alias: 'gen-comm',
   hidden: true,
   run: async (toolbox: Toolbox) => {
-    const { parameters, template, print, system } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    timer.start()
+
+    const { parameters, template, print } = toolbox
     const projectNameIsMMTECCLI = await verifyProjectName()
 
-    if (!projectNameIsMMTECCLI) return print.error('PROJECT INVALID')
+    if (!projectNameIsMMTECCLI) {
+      print.error('PROJECT INVALID')
+      return timer.printDuration()
+    }
 
     const { name, desc, alias } = parameters.options
     const target = `src/commands/${name}.ts`
@@ -27,7 +31,6 @@ module.exports = {
     const pathLog = print.colors.cyan(target)
 
     print.success(`GENERATED ${pathLog}`)
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command

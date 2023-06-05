@@ -1,15 +1,15 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/classes/Timer'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'generate-page',
   description: 'Create a new file in src/pages',
   alias: 'gen-page',
   run: async (toolbox: Toolbox) => {
-    const { parameters, createFile, createHelp, system, print } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    const { parameters, createFile, createHelp, print } = toolbox
+    timer.start()
 
     const haveHelp = hasHelpOtion(parameters.options)
 
@@ -28,22 +28,19 @@ module.exports = {
         ],
         commandName: 'generate:page',
       })
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     if (!parameters.first) {
       print.error('Name must be specified.')
-      print.newline()
-      print.info('Done in ' + timerString(timeElapsedInMs))
-      return
+      return timer.printDuration()
     }
 
     const files = parameters.array
 
     if (!files) {
       print.error('You must specify a file')
-      print.newline()
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     for (const file of files) {
@@ -51,7 +48,6 @@ module.exports = {
       await createFile('src/pages', nameToUpperCase)
     }
 
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command

@@ -1,5 +1,5 @@
 import { Toolbox } from 'gluegun/build/types/domain/toolbox'
-import { prisma } from '../../../prisma'
+import { userConfig } from '../../../shared/classes/UserConfig'
 
 export async function treatNotIndexOption({
   toolbox,
@@ -12,11 +12,9 @@ export async function treatNotIndexOption({
 
   const { notI, notIndex, index: indexFlag } = options
 
-  const defaultConfigStored = await prisma.defaultConfig.findFirst()
+  const { defaultConfigs } = userConfig.read()
 
-  const { notIndex: notIndexConfig = false } = defaultConfigStored ?? {}
-
-  const notIndexIsPresent = notI || notIndex || notIndexConfig
+  const notIndexIsPresent = notI || notIndex || defaultConfigs?.notIndex
 
   return notIndexIsPresent && !indexFlag
 }

@@ -1,6 +1,6 @@
 class Timer {
-  private _startTime
-  private _endTime
+  private _startTime: Date | null
+  private _endTime: Date | null
 
   constructor() {
     this._startTime = null
@@ -18,7 +18,11 @@ class Timer {
   duration() {
     this._end()
 
-    const timeElapsedInSeconds = (this._endTime - this._startTime) / 1000
+    if (!this._endTime || !this._startTime) throw new Error('Timer not started')
+
+    const timeElapsedInSeconds =
+      (this._endTime?.getMilliseconds() - this._startTime.getMilliseconds()) /
+      1000
 
     return timeElapsedInSeconds.toFixed(2)
   }

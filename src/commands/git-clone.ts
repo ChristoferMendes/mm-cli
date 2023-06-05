@@ -3,7 +3,7 @@ import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/classes/Timer'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'git-clone',
@@ -12,7 +12,7 @@ module.exports = {
     'Clone a repository from your git (Using your credentials stored or your local git configurations)',
   run: async (toolbox: Toolbox) => {
     const { system, parameters, print, createHelp } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    timer.start()
 
     const haveHelp = hasHelpOtion(parameters.options)
     const repository = parameters.first
@@ -62,13 +62,11 @@ module.exports = {
           name: repository,
         },
       })
-      print.newline()
-      print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     } catch (error) {
       const glueGunError = error as GluegunError
       print.info(glueGunError.message)
-      print.newline()
-      print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
   },
 } as Command

@@ -1,15 +1,15 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
-import { timerString } from '../shared/classes/Timer'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'whoami',
   description: 'Show your credentials stored',
   alias: 'i',
   run: async (toolbox: Toolbox) => {
-    const { print, system } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    const { print } = toolbox
+    timer.start()
 
     const user = await prisma.user.findFirst()
 
@@ -20,13 +20,11 @@ module.exports = {
           'mm store-me <your-name> <your-email>'
         )}`
       )
-      print.newline()
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     print.info(`Name: ${user?.name}.`)
     print.info(`Email: ${user?.email}.`)
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command
