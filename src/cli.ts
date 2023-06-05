@@ -1,5 +1,7 @@
 import { build, GluegunToolbox } from 'gluegun'
 import * as figlet from 'figlet'
+import { userConfig } from './shared/classes/UserConfig'
+import { nameHasSpecialCharacters } from './shared/nameHasSpecialCharacters'
 
 /**
  * Create the cli and kick it off
@@ -12,8 +14,8 @@ async function run(argv) {
     .plugins('./node_modules', { matching: 'mm-*', hidden: true })
     .help() // provides default for help, h, --help, -h
     .version() // provides default for version, v, --version, -v
-    .defaultCommand((toolbox: GluegunToolbox) => {
-      const { print } = toolbox
+    .defaultCommand(async (toolbox: GluegunToolbox) => {
+      const { print, prompt, system } = toolbox
       const onError = (err: Error | null, data: string | undefined) => {
         if (err) {
           print.error('Something went wrong...')
@@ -23,22 +25,82 @@ async function run(argv) {
         print.info(data)
       }
 
-      print.success(
-        `Please, type ${print.colors.cyan(
-          'mm -h'
-        )} to see the commands available!`
+      const configExists = userConfig.configExists()
+
+      if (configExists) {
+        print.success(
+          `Please, type ${print.colors.cyan(
+            'mm -h'
+          )} to see the commands available!`
+        )
+        return figlet.text(
+          'MM CLI!',
+          {
+            font: '3D-ASCII',
+            horizontalLayout: 'default',
+            verticalLayout: 'default',
+            width: 200,
+            whitespaceBreak: true,
+          },
+          onError
+        )
+      }
+
+      const usernameOnMachine = await system.exec('whoami')
+      const userConfirmed = await prompt.confirm(
+        `Hello ${usernameOnMachine}! It seems that it's your first time using this CLI. So, do you want to setup some default configurations?`,
+        true
       )
-      figlet.text(
-        'MM CLI!',
+
+      if (!userConfirmed) {
+        print.info(
+          "That's okay! Please, type 'mm -h' to see the commands available!"
+        )
+      }
+
+      const result = await prompt.ask({
+        message:
+          'What type of structure do you want your files to be generated (we will use the components folder as examples)',
+        choices: [
+          {
+            message:
+              'src/components/Navbar/Navbar.tsx && src/components/Navbar/index.tsx',
+            name: 'Not Index Option',
+          },
+          {
+            message: 'src/components/Navbar/index.tsx',
+            name: 'Index Option',
+          },
+        ],
+        type: 'select',
+        name: 'select',
+      })
+
+      userConfig.store({
+        defaultConfigs: { notIndex: result.select === 'Not Index Option' },
+      })
+
+      const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
+      const { name, email } = await prompt.ask([
         {
-          font: '3D-ASCII',
-          horizontalLayout: 'default',
-          verticalLayout: 'default',
-          width: 200,
-          whitespaceBreak: true,
+          message: 'Username used on git',
+          type: 'input',
+          name: 'name',
+          validate(value) {
+            return !emailRegex.test(value)
+          },
         },
-        onError
-      )
+        {
+          message: 'Email used on git',
+          type: 'input',
+          name: 'email',
+          validate(value) {
+            return emailRegex.test(value)
+          },
+        },
+      ])
+
+      userConfig.store({ user: { email, name } })
     })
     .exclude(['http', 'patching', 'package-manager', 'semver'])
     .create()

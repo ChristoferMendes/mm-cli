@@ -53,6 +53,10 @@ class UserConfig {
 
     return this._stringfy(data)
   }
+
+  configExists() {
+    return existsSync(this.USER_CONFIG_FILE)
+  }
 }
 
 export const userConfig = new UserConfig()
