@@ -1,9 +1,9 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { Toolbox } from '../@types/gluegun'
-import { prisma } from '../prisma'
 import { hasHelpOtion } from '../shared/isHelpOption'
 import { timer } from '../shared/classes/Timer'
+import { userConfig } from '../shared/classes/UserConfig'
 
 module.exports = {
   name: 'git-clone',
@@ -33,7 +33,7 @@ module.exports = {
       })
     }
 
-    const user = await prisma.user.findFirst()
+    const { user } = userConfig.read()
 
     const gitUserConfigured = await system.run('git config user.name')
     const userNameUsed = name ?? user?.name ?? gitUserConfigured
@@ -46,22 +46,8 @@ module.exports = {
       await system.exec(gitCloneCommand)
       print.success('Cloned your repository with success!')
       print.info(`Repository name: ${print.colors.cyan(repository)}.`)
-      const lastRepo = await prisma.lastRepoCloned.findFirst()
 
-      if (!lastRepo) {
-        return await prisma.lastRepoCloned.create({
-          data: {
-            name: repository,
-          },
-        })
-      }
-
-      await prisma.lastRepoCloned.update({
-        where: { id: lastRepo.id },
-        data: {
-          name: repository,
-        },
-      })
+      userConfig.store({ git: { lastRepoCloned: repository } })
       return timer.printDuration()
     } catch (error) {
       const glueGunError = error as GluegunError

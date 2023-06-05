@@ -7,6 +7,6 @@ export interface IUserConfigs {
     email: string
   }
   git: {
-    lastRepoCloned: string
+    lastRepoCloned: string | null
   }
 }

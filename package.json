@@ -29,7 +29,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@clack/prompts": "^0.6.3",
     "figlet": "^1.5.2",
     "gluegun": "latest"
   },

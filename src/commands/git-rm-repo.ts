@@ -1,15 +1,15 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { prisma } from '../prisma'
 import { hasHelpOtion } from '../shared/isHelpOption'
 import { timer } from '../shared/classes/Timer'
+import { userConfig } from '../shared/classes/UserConfig'
 
 module.exports = {
   name: 'git-rm-repo',
   alias: 'rm-repo',
   description: 'Delete the last repository cloned',
   run: async (toolbox: Toolbox) => {
-    const { print, system, parameters, createHelp } = toolbox
+    const { parameters, createHelp, print, system } = toolbox
     timer.start()
 
     const haveHelp = hasHelpOtion(parameters.options)
@@ -22,27 +22,22 @@ module.exports = {
       })
     }
 
-    const lastRepo = await prisma.lastRepoCloned.findFirst()
+    const { git } = userConfig.read()
 
-    if (!lastRepo) {
-      print.error('You do not cloned any repository')
+    if (!git?.lastRepoCloned) {
+      print.error(
+        'Either your last repository cloned was already deleted or you never cloned any repository'
+      )
       return timer.printDuration()
     }
 
-    if (!lastRepo.name) {
-      print.error('Your last repository cloned was already deleted')
-      return timer.printDuration()
-    }
+    const { lastRepoCloned } = git
 
-    await system.run(`rm -rf ${lastRepo.name}`)
+    await system.run(`rm -rf ${lastRepoCloned}`)
 
-    await prisma.lastRepoCloned.update({
-      where: { id: lastRepo.id },
-      data: {
-        name: '',
-      },
-    })
-    print.success(`Repository ${lastRepo.name} deleted!`)
+    print.success(`Repository ${lastRepoCloned} deleted!`)
+
+    userConfig.store({ git: { lastRepoCloned: null } })
     return timer.printDuration()
   },
 } as Command

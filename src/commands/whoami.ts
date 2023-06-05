@@ -1,7 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { prisma } from '../prisma'
 import { timer } from '../shared/classes/Timer'
+import { userConfig } from '../shared/classes/UserConfig'
 
 module.exports = {
   name: 'whoami',
@@ -11,7 +11,7 @@ module.exports = {
     const { print } = toolbox
     timer.start()
 
-    const user = await prisma.user.findFirst()
+    const { user } = userConfig.read()
 
     if (!user) {
       print.info('Your credentials are not stored yet')
