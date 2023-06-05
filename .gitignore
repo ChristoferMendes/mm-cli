@@ -13,4 +13,5 @@ src/generated
 src/prisma/generated
 src/prisma/dev.db
 src/prisma/dev.db-journal
-src/services
+src/service
+src/hooks

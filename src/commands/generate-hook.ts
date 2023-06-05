@@ -58,11 +58,13 @@ module.exports = {
     const directory = treatTarget(parameters)
 
     const target = directory + name
-    console.log(target)
 
     await template.generate({
       template: 'hook.ejs',
       target: target,
+      props: {
+        name: parameters.first,
+      },
     })
 
     const GENERATED = print.colors.green('GENERATED')
