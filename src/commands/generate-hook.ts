@@ -3,16 +3,16 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { hasTypescript } from '../shared/hasTypescript'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/timerString'
+import { timer } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'generate-hook',
   description: 'generate a react hook',
   alias: 'gen-hook',
   run: async (toolbox: Toolbox) => {
-    const { parameters, template, system, print, createHelp } = toolbox
+    const { parameters, template, print, createHelp } = toolbox
 
-    const timeElapsedInMs = system.startTimer()
+    timer.start()
 
     const isHelpOption = hasHelpOtion(parameters.options)
 
@@ -70,7 +70,6 @@ module.exports = {
     const GENERATED = print.colors.green('GENERATED')
     const targetString = print.colors.cyan(target)
     print.info(`${GENERATED} ${targetString}`)
-    print.newline()
-    print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 } as Command

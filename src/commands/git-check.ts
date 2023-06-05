@@ -1,6 +1,6 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
-import { timerString } from '../shared/timerString'
+import { timerString } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'git-check',

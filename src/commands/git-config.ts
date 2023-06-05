@@ -1,7 +1,9 @@
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
+import { userConfig } from '../shared/classes/UserConfig'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/timerString'
+import { timer } from '../shared/classes/Timer'
+import { ParametersUserCredentialsFilter } from '../shared/classes/ParametersUserCredentialsFilter'
 
 module.exports = {
   name: 'git-config',
@@ -10,7 +12,7 @@ module.exports = {
   alias: 'config',
   run: async (toolbox: Toolbox) => {
     const { parameters, system, print, createHelp } = toolbox
-    const timeElapsedInMs = system.startTimer()
+    timer.start()
 
     const haveHelp = hasHelpOtion(parameters.options)
 
@@ -32,27 +34,18 @@ module.exports = {
         alias: 'config',
         description: 'Configures your git credentials',
       })
-      print.newline()
-      print.info(
-        `Done in ${print.colors.cyan(
-          String((timeElapsedInMs() / 1000).toFixed(2))
-        )} seconds.`
-      )
-      return
+
+      return timer.printDuration()
     }
 
-    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i
+    const userCredentials = new ParametersUserCredentialsFilter(parameters)
 
-    const [emailFromCli] =
-      parameters.array?.filter((item) => item.match(emailRegex) ?? item) ?? []
+    const { email, name } = userCredentials
 
-    const [nameFromCli] =
-      parameters.array?.filter((item) => !item.match(emailRegex)) ?? []
+    const { user } = userConfig.read()
 
-    const user = await prisma.user.findFirst()
-
-    const nameUsed = nameFromCli ?? user?.name
-    const emailUsed = emailFromCli ?? user?.email
+    const nameUsed = name ?? user?.name
+    const emailUsed = email ?? user?.email
 
     if (!nameUsed || !emailUsed) {
       print.error(
@@ -66,8 +59,7 @@ module.exports = {
       )
 
       print.info(`Or, ${gitConfigCommand}`)
-      print.newline()
-      return print.info('Done in ' + timerString(timeElapsedInMs))
+      return timer.printDuration()
     }
 
     system.exec(`git config user.name ${nameUsed}`)
@@ -79,7 +71,6 @@ module.exports = {
     print.success(`Git configs changed!`)
     print.info(`User name: ${namePrint}`)
     print.info(`User email: ${emailPrint}`)
-    print.newline()
-    return print.info('Done in ' + timerString(timeElapsedInMs))
+    return timer.printDuration()
   },
 }

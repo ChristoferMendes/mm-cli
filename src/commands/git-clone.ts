@@ -3,7 +3,7 @@ import { GluegunError } from 'gluegun/build/types/toolbox/system-types'
 import { Toolbox } from '../@types/gluegun'
 import { prisma } from '../prisma'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/timerString'
+import { timerString } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'git-clone',

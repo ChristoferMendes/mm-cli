@@ -1,7 +1,7 @@
 import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { hasHelpOtion } from '../shared/isHelpOption'
-import { timerString } from '../shared/timerString'
+import { timerString } from '../shared/classes/Timer'
 
 module.exports = {
   name: 'generate-component',
