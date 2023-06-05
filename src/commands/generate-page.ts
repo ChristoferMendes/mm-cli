@@ -2,6 +2,8 @@ import { Command } from 'gluegun/build/types/domain/command'
 import { Toolbox } from '../@types/gluegun'
 import { hasHelpOtion } from '../shared/isHelpOption'
 import { timer } from '../shared/classes/Timer'
+import { hasDependency } from '../shared/hasPackage'
+import { createNextPage } from '../modules/createNextPage'
 
 module.exports = {
   name: 'generate-page',
@@ -43,8 +45,16 @@ module.exports = {
       return timer.printDuration()
     }
 
+    const hasNext = await hasDependency('next')
+
     for (const file of files) {
       const nameToUpperCase = toolbox.strings.upperFirst(file)
+
+      if (!hasNext) {
+        await createNextPage(toolbox.template, nameToUpperCase)
+        continue
+      }
+
       await createFile('src/pages', nameToUpperCase)
     }
 

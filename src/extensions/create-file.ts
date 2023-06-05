@@ -1,5 +1,6 @@
 import { Toolbox } from '../@types/gluegun'
 import { hasTypescript } from '../shared/hasTypescript'
+import { nameHasSpecialCharacters } from '../shared/nameHasSpecialCharacters'
 import { handleGeneratedFileOutput } from './modules/handleGeneratedFileOutput'
 import { treatNotIndexOption } from './modules/treatNotIndexOption'
 import { treatProps } from './modules/treatProps'
@@ -10,10 +11,9 @@ module.exports = (toolbox: Toolbox) => {
   const { template, print } = toolbox
 
   async function createFile(folder: `src/${string}`, name: string | undefined) {
-    const special_characters = /[^\w\s]/
-    const nameContainSpecialCharacter = special_characters.test(name ?? '')
+    if (!name) return
 
-    if (nameContainSpecialCharacter) {
+    if (nameHasSpecialCharacters(name)) {
       return print.error('File name must not contain special characters')
     }
 

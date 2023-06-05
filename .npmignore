@@ -8,6 +8,7 @@ dist
 src/pages
 src/components
 src/screens
+src/app
 src/extensions/create-file-legacy.ts
 src/extensions/create-help-legacy.ts
 build/extensions/create-file-legacy.js

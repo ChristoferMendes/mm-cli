@@ -16,7 +16,6 @@ module.exports = {
 
     const haveHelp = hasHelpOtion(parameters.options)
     const repository = parameters.first
-    const { name } = parameters.options
 
     if (haveHelp || !repository) {
       return createHelp({
@@ -34,9 +33,10 @@ module.exports = {
     }
 
     const { user } = userConfig.read()
+    const { name } = parameters.options
 
     const gitUserConfigured = await system.run('git config user.name')
-    const userNameUsed = name ?? user?.name ?? gitUserConfigured
+    const userNameUsed = user?.name ?? name ?? gitUserConfigured
 
     const nameAndRepo = `${userNameUsed.trim()}/${repository.trim()}`
 
