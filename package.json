@@ -7,12 +7,10 @@
     "mm": "bin/mm"
   },
   "scripts": {
-    "copy-prisma": "cp -r ./src/prisma ./build",
-    "gen-prisma": "npx prisma generate",
     "clean-build": "rm -rf ./build",
     "compile": "tsc -p .",
     "copy-templates": "mkdir ./build/templates && cp ./src/templates/*.ejs ./build/templates",
-    "build": "rm -rf src/prisma/dev.db && rm -rf src/prisma/dev.db-journal && yarn prisma-reset && yarn clean-build && yarn compile && yarn copy-templates && yarn copy-prisma && yarn test",
+    "build": "yarn clean-build && yarn compile && yarn copy-templates",
     "prepublishOnly": "yarn build",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "test": "jest --verbose --",
@@ -20,11 +18,6 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
     "mm": "./bin/mm",
-    "prisma-gen": "npx prisma generate --schema=./src/prisma/schema.prisma",
-    "prisma-studio": "npx prisma studio --schema=./src/prisma/schema.prisma",
-    "prisma-reset": "npx prisma migrate reset --schema=./src/prisma/schema.prisma",
-    "prisma-migrate": "npx prisma migrate dev --name init --schema=./src/prisma/schema.prisma",
-    "prisma-pull": "npx prisma db pull --schema=./src/prisma/schema.prisma",
     "prepare": "husky install"
   },
   "files": [

@@ -21,8 +21,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "target": "es5",
-    "declaration": true,
-    "declarationDir": "build/types",
+    "declaration": false,
     "typeRoots": [
       "./src/@types",
       "./node_modules/@types"
