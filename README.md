@@ -28,7 +28,7 @@ $ npm install -g mm-tec-cli
 <details> 
  <summary>Commands</summary>
  
-  | Command                               | Description                                                                                          |
+| Name                                  | Description                                                                                          |
 |---------------------------------------|------------------------------------------------------------------------------------------------------|
 | version (v)                           | Output the version number                                                                             |
 | whoami (i)                            | Show your credentials stored                                                                          |
