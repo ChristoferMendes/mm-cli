@@ -1,46 +1,42 @@
-import hasReactNative from '../../../shared/hasReactNative'
-import { hasStyledComponents } from '../../../shared/hasStyledComponents'
+import { hasDependency } from '../../../shared/hasPackage'
 import { ITreatTemplateFile } from './ITreatTemplateFile'
 
 export async function treatTemplateFile({
   targets,
 }: ITreatTemplateFile): Promise<(string | undefined)[]> {
-  const reactKey = 'react'
-  const reactNativeKey = 'reactNative'
-  const reactWithSyledComponentsKey = 'reactWithStyled'
-  const reactNativeWithStyledComponentsKey = 'reactNativeWithSyledComponentes'
-
   const [, notIndexTarget] = targets
 
   const notIndexExporterTemplate = notIndexTarget && 'index-exporter.ejs'
 
-  const templateFiles = {
-    [reactKey]: ['react.ejs', notIndexExporterTemplate],
-    [reactNativeKey]: ['react-rn.ejs', notIndexExporterTemplate],
-    [reactWithSyledComponentsKey]: [
+  const TEMPLATE_FILES = {
+    react: ['react.ejs', notIndexExporterTemplate],
+    reactNative: ['react-rn.ejs', notIndexExporterTemplate],
+    reactWithStyledComponents: [
       'react-styled.ejs',
       notIndexExporterTemplate,
       'styled.ejs',
     ],
-    [reactNativeWithStyledComponentsKey]: [
+    reactNativeWithSyledComponentes: [
       'react-rn-styled.ejs',
       notIndexExporterTemplate,
       'styled-rn.ejs',
     ],
   }
 
-  const reactNativeIsPresent = await hasReactNative()
-  const styledComponentIsPresent = await hasStyledComponents()
+  const [reactNativeIsPresent, styledComponentIsPresent] = await Promise.all([
+    hasDependency('react-native'),
+    hasDependency('styled-components'),
+  ])
 
   if (reactNativeIsPresent && styledComponentIsPresent) {
-    return templateFiles[reactNativeWithStyledComponentsKey]
+    return TEMPLATE_FILES.reactNativeWithSyledComponentes
   }
 
-  if (reactNativeIsPresent) return templateFiles[reactNativeKey]
+  if (reactNativeIsPresent) return TEMPLATE_FILES.reactNative
 
   if (styledComponentIsPresent) {
-    return templateFiles[reactWithSyledComponentsKey]
+    return TEMPLATE_FILES.reactWithStyledComponents
   }
 
-  return templateFiles[reactKey]
+  return TEMPLATE_FILES.react
 }

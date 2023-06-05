@@ -7,19 +7,16 @@ export function handleGeneratedFileOutput({
   extension,
   notIndexIsPresent,
 }: IHandleGeneratedFileOutput): void {
-  const defaultKey = 'default'
-  const notIndexKey = 'notIndex'
-
-  const templateFilePath = {
-    [defaultKey]: `${folder}/${name}/index.${extension}x`,
-    [notIndexKey]: `${folder}/${name}/${name}.${extension}x`,
+  const TEMPLATE_FILE_PATH = {
+    default: `${folder}/${name}/index.${extension}x`,
+    notIndex: `${folder}/${name}/${name}.${extension}x`,
   }
 
   const generatedString = print.colors.green('GENERATED')
 
   const filePath = notIndexIsPresent
-    ? templateFilePath[notIndexKey]
-    : templateFilePath[defaultKey]
+    ? TEMPLATE_FILE_PATH.notIndex
+    : TEMPLATE_FILE_PATH.default
 
   const folderString = print.colors.cyan(`${filePath}`)
 

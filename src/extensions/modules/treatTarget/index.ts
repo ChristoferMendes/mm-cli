@@ -1,4 +1,4 @@
-import { hasStyledComponents } from '../../../shared/hasStyledComponents'
+import { hasDependency } from '../../../shared/hasPackage'
 import { ITreatTarget } from './ITreatTarget'
 
 export async function treatTarget({
@@ -7,9 +7,6 @@ export async function treatTarget({
   notIndexIsPresent,
   extension,
 }: ITreatTarget): Promise<(string | undefined)[]> {
-  const defaultTargetsKey = 'default'
-  const notIndexTargetsKey = 'notIndex'
-
   const reactExtension = `${extension}x`
   const defaultPath = `${folder}/${name}`
 
@@ -17,27 +14,23 @@ export async function treatTarget({
   const notIndexTargetFolder = `${defaultPath}/${name}.${reactExtension}`
   const notIndexExporterTargetFolder = defaultTargetFolder
 
-  const styledComponentIsPresent = await hasStyledComponents()
+  const styledComponentIsPresent = await hasDependency('styled-components')
   const styledTargetFolder = styledComponentIsPresent
     ? `${defaultPath}/styles.${extension}`
     : undefined
 
   const notIndexDefault = ''
 
-  const target = {
-    [defaultTargetsKey]: [
-      defaultTargetFolder,
-      notIndexDefault,
-      styledTargetFolder,
-    ],
-    [notIndexTargetsKey]: [
+  const TARGET = {
+    default: [defaultTargetFolder, notIndexDefault, styledTargetFolder],
+    notIndex: [
       notIndexTargetFolder,
       notIndexExporterTargetFolder,
       styledTargetFolder,
     ],
   }
 
-  if (notIndexIsPresent) return target[notIndexTargetsKey]
+  if (notIndexIsPresent) return TARGET.notIndex
 
-  return target[defaultTargetsKey]
+  return TARGET.default
 }
