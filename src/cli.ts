@@ -1,7 +1,6 @@
 import { build, GluegunToolbox } from 'gluegun'
 import * as figlet from 'figlet'
 import { userConfig } from './shared/classes/UserConfig'
-import { nameHasSpecialCharacters } from './shared/nameHasSpecialCharacters'
 
 /**
  * Create the cli and kick it off
